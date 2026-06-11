@@ -55,13 +55,13 @@ class RoleControllerTest extends AbstractIntegrationTest {
         .header(TOKEN_HEADER_NAME, TOKEN)
         .content("""
           {
-            "name": "测试角色223",
-            "description": "测试角色223描述"
+            "name": "Test Role 223",
+            "description": "Test Role 223 Description"
           }
           """))
       .andExpect(status().isCreated())
       .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-      .andExpect(jsonPath("name", is("测试角色223")));
+      .andExpect(jsonPath("name", is("Test Role 223")));
   }
 
   @Test
@@ -101,13 +101,13 @@ class RoleControllerTest extends AbstractIntegrationTest {
         .header(TOKEN_HEADER_NAME, TOKEN)
         .content("""
            {
-            "name": "测试角色110",
-            "description": "测试角色110描述"
+            "name": "Test Role 110",
+            "description": "Test Role 110 Description"
           }
           """))
       .andExpect(status().isOk())
       .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-      .andExpect(jsonPath("name", is("测试角色110")));
+      .andExpect(jsonPath("name", is("Test Role 110")));
   }
 
   @Test
@@ -117,13 +117,13 @@ class RoleControllerTest extends AbstractIntegrationTest {
         .header(TOKEN_HEADER_NAME, TOKEN)
         .content("""
           {
-            "name": "测试角色删除",
-            "description": "测试角色删除描述"
+            "name": "Test Role Delete",
+            "description": "Test Role Delete Description"
           }
           """))
       .andExpect(status().isCreated())
       .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-      .andExpect(jsonPath("name", is("测试角色删除")))
+      .andExpect(jsonPath("name", is("Test Role Delete")))
       .andReturn().getResponse().getContentAsString();
 
     mvc.perform(delete("/roles/{roleId}", JsonUtils.parseToMap(json).get("id"))

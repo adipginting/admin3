@@ -63,17 +63,17 @@
       v-bind="$attrs"
   >
     <template #header>
-      <div class="org-header">组织架构</div>
+      <div class="org-header">Organization</div>
     </template>
     <div class="org-content">
       <div class="org-left">
         <el-tabs v-model="activeTabName">
-          <el-tab-pane label="组织架构" name="org" v-if="tabType !== TabType.ROLE">
+          <el-tab-pane label="Organization" name="org" v-if="tabType !== TabType.ROLE">
             <el-input
                 style="margin-bottom: 8px"
                 :prefix-icon="Search"
                 v-model="orgSearchVal"
-                placeholder="搜索"
+                placeholder="Search"
                 clearable
             />
             <el-tree
@@ -107,7 +107,7 @@
         </el-radio-group>
       </div> -->
       <div class="org-right">
-        <div>{{ mode === ModeType.MULT ? '已选择' : '请选择' }}</div>
+        <div>{{ mode === ModeType.MULT ? 'Selected' : 'Please select' }}</div>
 
         <div v-if="mode === ModeType.MULT">
           <div v-if="filterUser">
@@ -117,7 +117,7 @@
                 selectedUserIds.length > 0 && selectedUserIds.length < userList.length
               "
                 @change="toggleSelectAllUsers"
-            >全选
+            >Select All
             </el-checkbox
             >
             <el-checkbox-group v-model="selectedUserIds" @change="handleChange">
@@ -170,8 +170,8 @@
     </div>
     <template #footer>
       <div class="footer">
-        <el-button @click="onCancel">取消</el-button>
-        <el-button type="primary" @click="onSubmit">确定</el-button>
+        <el-button @click="onCancel">Cancel</el-button>
+        <el-button type="primary" @click="onSubmit">OK</el-button>
       </div>
     </template>
   </el-dialog>
@@ -199,7 +199,7 @@ export interface OrgTreeNode {
   parent?: OrgTreeNode
 }
 
-export const rootNode = {name: '根节点', id: 1, type: OrgTypeEum.DEPART, children: []}
+export const rootNode = {name: 'Root Node', id: 1, type: OrgTypeEum.DEPART, children: []}
 
 export const defaultProps = {
   children: 'children',
@@ -208,8 +208,8 @@ export const defaultProps = {
 }
 
 export enum ModeType {
-  RADIO = 'radio', // 单选
-  MULT = 'multiple', // 多选
+  RADIO = 'radio', // Single select
+  MULT = 'multiple', // Multiple select
 }
 
 export enum TabType {
@@ -246,7 +246,7 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
-    // 组织架构和角色的显示情况
+    // Organization and role display settings
     tabType: {
       type: String as PropType<TabType>,
       required: false,
@@ -257,18 +257,18 @@ export default defineComponent({
       required: false,
       default: ModeType.MULT,
     },
-    // 是否筛选用户
+    // Whether to filter users
     filterUser: {
       type: Boolean,
       required: false,
       default: true,
     },
-    // filterUser=true时使用
+    // Used when filterUser=true
     selectedUsers: {
       type: Array as PropType<any[]>,
       default: () => [],
     },
-    // 已选择的角色id 回显角色下的所有人
+    // Selected role ID to echo all people under the role
     activeRoleId: {
       type: Number,
       default: 0
@@ -334,7 +334,7 @@ export default defineComponent({
         selectedRole.value = checkedStatus.checkedNodes
       }
     }
-    // 将全部选择了子节点去掉，使用其父节点
+    // Remove all selected child nodes and use their parent node
     const removeAllCheckedChildren = (checkedStatus: CheckedStatus) => {
       const {checkedKeys, checkedNodes} = checkedStatus
       const needToRemoveIds: number[] = []

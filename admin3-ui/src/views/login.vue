@@ -1,7 +1,7 @@
 <template>
   <div class="login-wrap">
     <div class="ms-login">
-      <div class="ms-title">Admin3后台管理系统</div>
+      <div class="ms-title">Admin3 Management System</div>
       <el-form :model="param" :rules="rules" ref="login" label-width="0px" class="ms-content">
         <el-form-item prop="username">
           <el-input v-model="param.username" placeholder="username">
@@ -23,7 +23,7 @@
           </el-input>
         </el-form-item>
         <div class="login-btn">
-          <el-button type="primary" @click="submitForm(login)">登录</el-button>
+          <el-button type="primary" @click="submitForm(login)">Login</el-button>
         </div>
         <p class="login-tips">Tips : admin/123456</p>
       </el-form>
@@ -56,11 +56,11 @@ const rules: FormRules = {
   username: [
     {
       required: true,
-      message: '请输入用户名',
+      message: 'Please enter username',
       trigger: 'blur'
     }
   ],
-  password: [{required: true, message: '请输入密码', trigger: 'blur'}]
+  password: [{required: true, message: 'Please enter password', trigger: 'blur'}]
 };
 let basicStore = useBasicStore();
 const login = ref<FormInstance>();
@@ -69,14 +69,14 @@ const submitForm = (formEl: FormInstance | undefined) => {
   formEl.validate((valid: boolean) => {
     if (valid) {
       reqLogin(param).then(res => {
-        ElMessage.success('登录成功');
+        ElMessage.success('Login successful');
         localStorage.setItem('token', res.data.token);
         router.push('/');
         basicStore.setUserinfo(res.data);
       });
 
     } else {
-      ElMessage.error('登录失败');
+      ElMessage.error('Login failed');
       return false;
     }
   });

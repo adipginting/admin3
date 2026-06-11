@@ -8,7 +8,7 @@ import java.util.Set;
 import static jakarta.persistence.CascadeType.DETACH;
 
 /**
- * 角色
+ * Role
  *
  * @author cjbi
  */

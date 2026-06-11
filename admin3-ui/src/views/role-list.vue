@@ -3,10 +3,10 @@
     <el-card shadow="never" style="height: 100%">
       <el-row :gutter="20" style="height: 100%">
         <el-col :xl="4" :lg="4" style="border-right: 1px solid #dcdfe6">
-          <div style="margin-bottom: 24px; font-weight: 700">角色管理</div>
+          <div style="margin-bottom: 24px; font-weight: 700">Role Management</div>
           <el-divider></el-divider>
           <el-button @click="addVisible = true;Object.assign(form, new Role());" type="primary" link
-                     v-action:role:create>新建角色
+                     v-action:role:create>Create Role
           </el-button>
           <div style="margin-top: 16px">
             <div
@@ -26,11 +26,11 @@
                 <template #dropdown>
                   <el-dropdown-menu>
                     <span v-action:role:update>
-                      <el-dropdown-item @click="handleEdit" v-action:role:update>编辑</el-dropdown-item>
+                      <el-dropdown-item @click="handleEdit" v-action:role:update>Edit</el-dropdown-item>
                     </span>
                     <span v-action:role:delete>
                       <el-dropdown-item @click="handleDelete(roleList.find(r => r?.id === activeRoleId))">
-                        <span class="del-btn">删除</span>
+                        <span class="del-btn">Delete</span>
                       </el-dropdown-item>
                     </span>
                   </el-dropdown-menu>
@@ -44,11 +44,11 @@
             <el-col :span="24" style="padding-left: 0px;">
               {{ roleList.find(r => r?.id === activeRoleId)?.name }}
               <el-button text :icon="Edit" @click="handleEdit" v-action:role:update>
-                编辑
+                Edit
               </el-button>
               <el-button text :icon="Delete" class="red"
                          @click="handleDelete(roleList.find(r => r?.id === activeRoleId))" v-action:role:delete>
-                删除
+                Delete
               </el-button>
             </el-col>
             <el-col style="font-size: 8px;color: #777777;padding-left: 0px;" :span="24">
@@ -56,20 +56,20 @@
             </el-col>
           </el-col>
           <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleChangeRoleUserClient">
-            <el-tab-pane label="角色成员" name="first">
+            <el-tab-pane label="Role Members" name="first">
               <div style="margin-bottom: 24px">
-                <el-button type="primary" @click="isOrgSelectShow = true" v-action:role:update>调整成员</el-button>
+                <el-button type="primary" @click="isOrgSelectShow = true" v-action:role:update>Adjust Members</el-button>
               </div>
               <el-table :data="tableData" border class="table" ref="multipleTable"
                         header-cell-class-name="table-header">
                 <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
-                <el-table-column prop="username" label="用户名"></el-table-column>
-                <el-table-column prop="gender" label="性别">
+                <el-table-column prop="username" label="Username"></el-table-column>
+                <el-table-column prop="gender" label="Gender">
                   <template #default="{ row }">
-                    <span>{{ row.gender === 'MALE' ? '男' : '女' }}</span>
+                    <span>{{ row.gender === 'MALE' ? 'Male' : 'Female' }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column label="头像" align="center">
+                <el-table-column label="Avatar" align="center">
                   <template #default="scope">
                     <el-image
                       class="table-td-thumb"
@@ -81,7 +81,7 @@
                     </el-image>
                   </template>
                 </el-table-column>
-                <el-table-column label="拥有的角色">
+                <el-table-column label="Assigned Roles">
                   <template #default="scope">
                     <sppan v-for="(role, index) in scope.row?.roles">
                       <template v-if="index > 0">, </template>
@@ -101,9 +101,9 @@
                 ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="权限设置" name="second">
+            <el-tab-pane label="Permission Settings" name="second">
               <div style="margin-bottom: 24px">
-                <el-button type="primary" @click="savePermission" v-action:role:update>保存</el-button>
+                <el-button type="primary" @click="savePermission" v-action:role:update>Save</el-button>
               </div>
               <div v-for="(menu, index) in rolePermission" :key="index">
                 <el-row>
@@ -126,7 +126,7 @@
                       v-model="checkbox.checkedAll"
                       :indeterminate="checkbox.indeterminate"
                       @change="onChangeCheckAll($event,checkbox)"
-                    >全选
+                    >Select All
                     </el-checkbox>
                     <el-checkbox-group :disabled="!menu.enabled" v-model="checkbox.selected"
                                        @change="onChangeCheck($event,checkbox)">
@@ -144,7 +144,7 @@
       </el-row>
     </el-card>
 
-    <!-- 组织架构选择弹出框 -->
+    <!-- Organization Selection Dialog -->
     <OrgSelect
       append-to-body
       v-if="isOrgSelectShow"
@@ -154,40 +154,40 @@
       @on-submit="handleOrgSelectSubmit"
     />
 
-    <!-- 新增弹出框 -->
-    <el-dialog title="新增" v-model="addVisible" width="30%">
+    <!-- Add Dialog -->
+    <el-dialog title="Add" v-model="addVisible" width="30%">
       <el-form label-width="70px">
-        <el-form-item label="用户名">
+        <el-form-item label="Name">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="描述">
+        <el-form-item label="Description">
           <el-input v-model="form.description" type="textarea"></el-input>
         </el-form-item>
       </el-form>
       <template #footer>
 				<span class="dialog-footer">
-					<el-button @click="addVisible = false">取 消</el-button>
-					<el-button type="primary" @click="saveAdd">确 定</el-button>
+					<el-button @click="addVisible = false">Cancel</el-button>
+					<el-button type="primary" @click="saveAdd">OK</el-button>
 				</span>
       </template>
     </el-dialog>
 
-    <!-- 编辑弹出框 -->
-    <el-dialog title="编辑" v-model="editVisible" width="30%">
+    <!-- Edit Dialog -->
+    <el-dialog title="Edit" v-model="editVisible" width="30%">
       <el-form label-width="70px">
         <el-form label-width="70px">
-          <el-form-item label="用户名">
+          <el-form-item label="Name">
             <el-input v-model="form.name"></el-input>
           </el-form-item>
-          <el-form-item label="描述">
+          <el-form-item label="Description">
             <el-input v-model="form.description" type="textarea"></el-input>
           </el-form-item>
         </el-form>
       </el-form>
       <template #footer>
 				<span class="dialog-footer">
-					<el-button @click="editVisible = false">取 消</el-button>
-					<el-button type="primary" @click="saveEdit">确 定</el-button>
+					<el-button @click="editVisible = false">Cancel</el-button>
+					<el-button type="primary" @click="saveEdit">OK</el-button>
 				</span>
       </template>
     </el-dialog>
@@ -272,7 +272,7 @@ const reqRoleList = async () => {
   try {
     const { data, } = await getRoleList();
     roleList.value = data;
-    getResourceTree(); // 获取权限列表
+    getResourceTree(); // Get permission list
   } catch (error) {
     ElMessage.error(error as Error);
   }
@@ -286,7 +286,7 @@ const handleRoleChange = (role: RoleInterface) => {
   handlePermission();
 }
 
-//用户表格数据
+// User table data
 
 const userQuery = reactive({
   username: '',
@@ -311,19 +311,19 @@ const getUserData = (roleId: number) => {
 getUserData(activeRoleId.value);
 
 
-// 分页导航
+// Pagination
 const handlePageChange = (val: number) => {
   userQuery.pageIndex = val;
   getUserData(activeRoleId.value);
 };
 
-//标签页
+// Tabs
 const activeName = ref('first');
 const rolePermission = ref<Permission[]>([]);
 
 const getResourceTree = () => {
 
-//初始化权限资源树
+// Initialize permission resource tree
   reqResourceTree().then(res => {
     rolePermission.value = res.data.map((menu: Resource) => {
       return {
@@ -348,7 +348,7 @@ const getResourceTree = () => {
       };
     });
 
-    // 赋值
+    // Assignment
     handlePermission();
   });
 }
@@ -402,14 +402,14 @@ let form = reactive(new Role());
 const saveAdd = () => {
   createRole(form).then(res => {
     reqRoleList();
-    ElMessage.success(`新增成功`);
+    ElMessage.success(`Added successfully`);
     addVisible.value = false;
   });
 };
 const saveEdit = () => {
   updateRole(activeRoleId.value, form).then(res => {
     reqRoleList();
-    ElMessage.success(`修改成功`);
+    ElMessage.success(`Updated successfully`);
     editVisible.value = false;
   });
 };
@@ -429,20 +429,20 @@ const savePermission = () => {
   });
   changeResources(activeRoleId.value, resourceIds).then(res => {
     reqRoleList();
-    ElMessage.success(`修改角色权限成功`);
+    ElMessage.success(`Role permissions updated successfully`);
     editVisible.value = false;
   });
 }
 
-// 删除操作
+// Delete operation
 const handleDelete = (role: any) => {
-  // 二次确认删除
-  ElMessageBox.confirm('确定要删除吗？', '提示', {
+  // Confirm delete
+  ElMessageBox.confirm('Are you sure you want to delete?', 'Warning', {
     type: 'warning'
   }).then(() => {
     deleteRole(role.id).then(res => {
       reqRoleList();
-      ElMessage.success('删除成功');
+      ElMessage.success('Deleted successfully');
     });
   }).catch(() => {
   });
@@ -457,7 +457,7 @@ const handleOrgSelectSubmit = (p: OrgSelectedData) => {
   let userIds: number[] = p.selected?.map((u: { id: number; }) => u.id);
   changeUsers(activeRoleId.value, userIds).then(res => {
     getUserData(activeRoleId.value);
-    ElMessage.success(`修改角色成员成功`);
+    ElMessage.success(`Role members updated successfully`);
     editVisible.value = false;
   });
 }

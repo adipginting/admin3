@@ -55,14 +55,14 @@ public class OrganizationControllerTest extends AbstractIntegrationTest {
         .header(TOKEN_HEADER_NAME, TOKEN)
         .content("""
           {
-            "name": "测试节点223",
+            "name": "Test Node 223",
             "type": "DEPARTMENT",
             "parentId": 1
           }
           """))
       .andExpect(status().isCreated())
       .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-      .andExpect(jsonPath("name", is("测试节点223")));
+      .andExpect(jsonPath("name", is("Test Node 223")));
   }
 
   @Test
@@ -72,14 +72,14 @@ public class OrganizationControllerTest extends AbstractIntegrationTest {
         .header(TOKEN_HEADER_NAME, TOKEN)
         .content("""
           {
-            "name": "测试节点2023",
+            "name": "Test Node 2023",
             "type": "DEPARTMENT",
             "parentId": 1
           }
           """))
       .andExpect(status().isOk())
       .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-      .andExpect(jsonPath("name", is("测试节点2023")));
+      .andExpect(jsonPath("name", is("Test Node 2023")));
   }
 
   @Test
@@ -97,14 +97,14 @@ public class OrganizationControllerTest extends AbstractIntegrationTest {
         .header(TOKEN_HEADER_NAME, TOKEN)
         .content("""
           {
-            "name": "测试节点删除",
+            "name": "Test Node Delete",
             "type": "DEPARTMENT",
             "parentId": 1
           }
           """))
       .andExpect(status().isCreated())
       .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-      .andExpect(jsonPath("name", is("测试节点删除")))
+      .andExpect(jsonPath("name", is("Test Node Delete")))
       .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
       .andReturn().getResponse().getContentAsString();
 

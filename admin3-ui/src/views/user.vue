@@ -5,7 +5,7 @@
         <el-card shadow="hover">
           <template #header>
             <div class="clearfix">
-              <span>基础信息</span>
+              <span>Basic Info</span>
             </div>
           </template>
           <div class="info">
@@ -16,7 +16,7 @@
 							</span>
             </div>
             <div class="info-name">{{ username }}</div>
-            <div class="info-desc">不可能！我的代码怎么可能会有bug！</div>
+            <div class="info-desc">Impossible! How could my code have bugs!</div>
           </div>
         </el-card>
       </el-col>
@@ -24,28 +24,28 @@
         <el-card shadow="hover">
           <template #header>
             <div class="clearfix">
-              <span>账户编辑</span>
+              <span>Account Edit</span>
             </div>
           </template>
           <el-form label-width="90px">
-            <el-form-item label="用户名："> {{ username }}</el-form-item>
-            <el-form-item label="旧密码：">
+            <el-form-item label="Username:"> {{ username }}</el-form-item>
+            <el-form-item label="Old Password:">
               <el-input type="password" v-model="form.old"></el-input>
             </el-form-item>
-            <el-form-item label="新密码：">
+            <el-form-item label="New Password:">
               <el-input type="password" v-model="form.new"></el-input>
             </el-form-item>
-            <el-form-item label="个人简介：">
+            <el-form-item label="Bio:">
               <el-input v-model="form.desc"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSubmit">保存</el-button>
+              <el-button type="primary" @click="onSubmit">Save</el-button>
             </el-form-item>
           </el-form>
         </el-card>
       </el-col>
     </el-row>
-    <el-dialog title="裁剪图片" v-model="dialogVisible" width="600px">
+    <el-dialog title="Crop Image" v-model="dialogVisible" width="600px">
       <vue-cropper
           ref="cropper"
           :src="imgSrc"
@@ -58,10 +58,10 @@
       <template #footer>
 				<span class="dialog-footer">
 					<el-button class="crop-demo-btn" type="primary"
-          >选择图片
+          >Select Image
 						<input class="crop-input" type="file" name="image" accept="image/*" @change="setImage"/>
 					</el-button>
-					<el-button type="primary" @click="saveAvatar">上传并保存</el-button>
+					<el-button type="primary" @click="saveAvatar">Upload and Save</el-button>
 				</span>
       </template>
     </el-dialog>
@@ -77,7 +77,7 @@ import {useBasicStore} from "../store/basic";
 const form = reactive({
   old: '',
   new: '',
-  desc: '不可能！我的代码怎么可能会有bug！'
+  desc: 'Impossible! How could my code have bugs!'
 });
 const onSubmit = () => {
 };

@@ -131,7 +131,7 @@ public class StorageControllerTest extends AbstractIntegrationTest {
                "createUser": "",
                "endpoint": "oss-cn-shanghai.aliyuncs.com",
                "isDefault": false,
-               "name": "阿里云",
+               "name": "Alibaba Cloud",
                "secretKey": "2222222222",
                "storagePath": "files",
                "type": "OSS"
@@ -139,7 +139,7 @@ public class StorageControllerTest extends AbstractIntegrationTest {
           """))
       .andExpect(status().isCreated())
       .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-      .andExpect(jsonPath("name", is("阿里云")))
+      .andExpect(jsonPath("name", is("Alibaba Cloud")))
       .andReturn().getResponse().getContentAsString();
     Number id = (Number) JsonUtils.parseToMap(json).get("id");
 
@@ -155,14 +155,14 @@ public class StorageControllerTest extends AbstractIntegrationTest {
                "createUser": "",
                "endpoint": "oss-cn-shanghai.aliyuncs.com",
                "isDefault": false,
-               "name": "阿里云222",
+               "name": "Alibaba Cloud 222",
                "secretKey": "2222222222",
                "storagePath": "files",
                "type": "OSS"
           }
           """))
       .andExpect(status().isOk())
-      .andExpect(jsonPath("name", is("阿里云222")));
+      .andExpect(jsonPath("name", is("Alibaba Cloud 222")));
 
     mvc.perform(delete("/storage/configs/{id}", id)
         .header(TOKEN_HEADER_NAME, TOKEN)

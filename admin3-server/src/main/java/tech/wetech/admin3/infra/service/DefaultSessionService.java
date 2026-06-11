@@ -47,11 +47,11 @@ public class DefaultSessionService implements SessionService {
   @Transactional
   public UserinfoDTO login(String username, String password) {
     UserCredential credential = userCredentialRepository.findCredential(username, PASSWORD)
-      .orElseThrow(() -> new UserException(CommonResultStatus.UNAUTHORIZED, "密码不正确"));
+      .orElseThrow(() -> new UserException(CommonResultStatus.UNAUTHORIZED, "Incorrect password"));
     if (credential.doCredentialMatch(password)) {
       User user = credential.getUser();
       if (user.isLocked()) {
-        throw new UserException(CommonResultStatus.UNAUTHORIZED, "用户已经停用，请与管理员联系");
+        throw new UserException(CommonResultStatus.UNAUTHORIZED, "User has been disabled, please contact the administrator");
       }
       user.setLastLoginTime(LocalDateTime.now());
       userRepository.save(user);
@@ -62,7 +62,7 @@ public class DefaultSessionService implements SessionService {
       DomainEventPublisher.instance().publish(new UserLoggedIn(userinfo, getClientIP()));
       return userinfo;
     } else {
-      throw new UserException(CommonResultStatus.UNAUTHORIZED, "密码不正确");
+      throw new UserException(CommonResultStatus.UNAUTHORIZED, "Incorrect password");
     }
   }
 

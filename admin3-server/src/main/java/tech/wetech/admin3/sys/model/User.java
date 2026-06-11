@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import static jakarta.persistence.FetchType.LAZY;
 
 /**
- * 用户
+ * User
  *
  * @author cjbi
  */
@@ -64,7 +64,7 @@ public class User extends BaseEntity {
   }
 
   /**
-   * 获取用户权限列表
+   * Get user permission list
    *
    * @return
    */

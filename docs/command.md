@@ -1,56 +1,56 @@
-# 常用命令
+# Common Commands
 
-## 服务端命令
+## Server Commands
 
-- 编译打包
+- Compile and package
 ```
 mvn clean package
 ```
 
-- 安装到本地仓库
+- Install to local repository
 ```
 mvn clean install
 ```
-说明：如果服务端使用webjars管理前端资源，强烈建议将admin3-ui安装到本地仓库
+Note: If the server uses webjars to manage frontend resources, it is strongly recommended to install admin3-ui to the local repository.
 
-- 运行部署
+- Run and deploy
 ```shell
 cd admin3-server/target
 nohup java -jar -Dspring.datasource.url=xxx -Dspring.datasource.username=xxx -Dspring.datasource.password=xxx admin3-server-0.0.1-SNAPSHOT.jar >/dev/null 2>&1 &
 ```
 
-- 打包JVM镜像
+- Package JVM image
 ```shell
 mvn spring-boot:build-image -Dmaven.test.skip=true -Ddocker.image-name=xxx -Ddocker.username=xxx -Ddocker.password=xxx
 ```
 
-- 打包native镜像
+- Package native image
 ```shell
  mvn -Pnative spring-boot:build-image -Dmaven.test.skip=true -Ddocker.image-name=xxx -Ddocker.username=xxx -Ddocker.password=xxx
 ```
 
-- 本机测试native镜像
+- Test native image locally
 
-> 注意：本机需要安装 [graalvm](https://www.graalvm.org/latest/docs/getting-started/)
+> Note: You need to install [graalvm](https://www.graalvm.org/latest/docs/getting-started/) locally.
 
 ```shell
 mvn clean -X package -Pnative,nativeTest
 ```
 
 
-## 前端命令
+## Frontend Commands
 
-- 安装依赖
+- Install dependencies
 ```
 yarn install
 ```
 
-- 开发模式运行
+- Run in development mode
 ```
 yarn dev
 ```
 
-- 编译项目
+- Build project
 ```
 yarn build
 ```

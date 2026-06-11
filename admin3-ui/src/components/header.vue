@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <!-- 折叠按钮 -->
+    <!-- Collapse button -->
     <div class="collapse-btn" @click="collapseChage">
       <el-icon v-if="sidebar.collapse">
         <Expand/>
@@ -9,23 +9,23 @@
         <Fold/>
       </el-icon>
     </div>
-    <div class="logo">Admin3后台管理系统</div>
+    <div class="logo">Admin3 Management System</div>
     <div class="header-right">
       <div class="header-user-con">
-        <!-- 消息中心 -->
+        <!-- Message center -->
         <div class="btn-bell" @click="router.push('/tabs')">
           <el-tooltip
               effect="dark"
-              :content="message ? `有${message}条未读消息` : `消息中心`"
+              :content="message ? `${message} unread messages` : `Message Center`"
               placement="bottom"
           >
             <i class="el-icon-lx-notice"></i>
           </el-tooltip>
           <span class="btn-bell-badge" v-if="message"></span>
         </div>
-        <!-- 用户头像 -->
+        <!-- User avatar -->
         <el-avatar class="user-avator" :size="30" :src="avatar"/>
-        <!-- 用户名下拉菜单 -->
+        <!-- Username dropdown menu -->
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
 					<span class="el-dropdown-link">
 						{{ username }}
@@ -36,10 +36,10 @@
           <template #dropdown>
             <el-dropdown-menu>
 <!--              <a href="https://github.com/lin-xin/vue-manage-system" target="_blank">
-                <el-dropdown-item>项目仓库</el-dropdown-item>
+                <el-dropdown-item>Project Repository</el-dropdown-item>
               </a>-->
-              <el-dropdown-item command="user">个人中心</el-dropdown-item>
-              <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
+              <el-dropdown-item command="user">Personal Center</el-dropdown-item>
+              <el-dropdown-item divided command="loginout">Logout</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -61,7 +61,7 @@ const avatar: string | null = userinfo.avatar;
 const message: number = 2;
 
 const sidebar = useSidebarStore();
-// 侧边栏折叠
+// Sidebar collapse
 const collapseChage = () => {
   sidebar.handleCollapse();
 };
@@ -72,7 +72,7 @@ onMounted(() => {
   }
 });
 
-// 用户名下拉菜单选择事件
+// Username dropdown selection event
 const router = useRouter();
 const handleCommand = (command: string) => {
   if (command == 'loginout') {

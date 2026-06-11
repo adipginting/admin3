@@ -1,56 +1,56 @@
 admin3:
   events:
     "[tech.wetech.admin3.sys.event.UserLoggedIn]":
-      text: '用户登录'
-      log-template: ' {{userinfo.username}} 登录系统，登录IP：{{ip}}'
+      text: "User Login"
+      log-template: " {{userinfo.username}} logged in, IP: {{ip}}"
     "[tech.wetech.admin3.sys.event.UserLoggedOut]":
-      text: '退出登录'
-      log-template: ' {{userinfo.username}} 退出登录'
+      text: "Logout"
+      log-template: " {{userinfo.username}} logged out"
     "[tech.wetech.admin3.sys.event.UserCreated]":
-      text: '创建用户'
-      log-template: '用户 {{user.username}} 已创建，用户ID：{{user.id}}'
+      text: "Create User"
+      log-template: "User {{user.username}} created, User ID: {{user.id}}"
     "[tech.wetech.admin3.sys.event.UserUpdated]":
-      text: '更新用户'
-      log-template: '用户 {{user.username}} 已更新，用户ID：{{user.id}}'
+      text: "Update User"
+      log-template: "User {{user.username}} updated, User ID: {{user.id}}"
     "[tech.wetech.admin3.sys.event.UserDeleted]":
-      text: '删除用户'
-      log-template: '用户 {{user.username}} 已删除，用户ID：{{user.id}}'
+      text: "Delete User"
+      log-template: "User {{user.username}} deleted, User ID: {{user.id}}"
     "[tech.wetech.admin3.sys.event.OrganizationCreated]":
-      text: '创建组织架构'
-      log-template: '组织架构节点 {{organization.name}} 已创建'
+      text: "Create Organization"
+      log-template: "Organization node {{organization.name}} created"
     "[tech.wetech.admin3.sys.event.OrganizationUpdated]":
-      text: '更新组织架构'
-      log-template: '组织架构节点 {{organization.name}} 已更新'
+      text: "Update Organization"
+      log-template: "Organization node {{organization.name}} updated"
     "[tech.wetech.admin3.sys.event.OrganizationDeleted]":
-      text: '删除组织架构'
-      log-template: '组织架构节点 {{organization.name}} 已删除'
+      text: "Delete Organization"
+      log-template: "Organization node {{organization.name}} deleted"
     "[tech.wetech.admin3.sys.event.RoleCreated]":
-      text: '创建角色'
-      log-template: '角色 {{role.name}} 已创建'
+      text: "Create Role"
+      log-template: "Role {{role.name}} created"
     "[tech.wetech.admin3.sys.event.RoleUpdated]":
-      text: '更新角色'
-      log-template: '角色 {{role.name}} 已更新'
+      text: "Update Role"
+      log-template: "Role {{role.name}} updated"
     "[tech.wetech.admin3.sys.event.RoleDeleted]":
-      text: '删除角色'
-      log-template: '角色 {{role.name}} 已删除'
+      text: "Delete Role"
+      log-template: "Role {{role.name}} deleted"
     "[tech.wetech.admin3.sys.event.ResourceCreated]":
-      text: '创建资源'
-      log-template: '资源 {{resource.name}} 已创建'
+      text: "Create Resource"
+      log-template: "Resource {{resource.name}} created"
     "[tech.wetech.admin3.sys.event.ResourceUpdated]":
-      text: '更新资源'
-      log-template: '资源 {{resource.name}} 已更新'
+      text: "Update Resource"
+      log-template: "Resource {{resource.name}} updated"
     "[tech.wetech.admin3.sys.event.ResourceDeleted]":
-      text: '删除资源'
-      log-template: '资源 {{resource.name}} 删除成功'
+      text: "Delete Resource"
+      log-template: "Resource {{resource.name}} deleted successfully"
     "[tech.wetech.admin3.sys.event.StorageConfigCreated]":
-      text: '创建对象存储配置'
-      log-template: '对象存储配置 {{config.storageId}} 已创建'
+      text: "Create Object Storage Config"
+      log-template: "Object storage config {{config.storageId}} created"
     "[tech.wetech.admin3.sys.event.StorageConfigUpdated]":
-      text: '更新对象存储'
-      log-template: '对象存储配置 {{config.storageId}} 已更新'
+      text: "Update Object Storage"
+      log-template: "Object storage config {{config.storageId}} updated"
     "[tech.wetech.admin3.sys.event.StorageConfigDeleted]":
-      text: '删除对象存储配置'
-      log-template: '对象存储配置 {{config.storageId}} 删除成功'
+      text: "Delete Object Storage Config"
+      log-template: "Object storage config {{config.storageId}} deleted successfully"
     "[tech.wetech.admin3.sys.event.StorageConfigMarkedAsDefault]":
-      text: '标记默认对象存储位置'
-      log-template: '对象存储配置 {{config.storageId}} 已标记为默认存储位置'
+      text: "Mark Default Object Storage"
+      log-template: "Object storage config {{config.storageId}} marked as default storage location"

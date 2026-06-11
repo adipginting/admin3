@@ -35,7 +35,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     }
     String token = request.getHeader("Authorization").replace("Bearer", "").trim();
     if (!sessionService.isLogin(token)) {
-      throw new BusinessException(CommonResultStatus.UNAUTHORIZED, "未登录");
+      throw new BusinessException(CommonResultStatus.UNAUTHORIZED, "Not logged in");
     }
     UserinfoDTO loginUserInfo = sessionService.getLoginUserInfo(token);
     if (handler instanceof HandlerMethod handlerMethod) {

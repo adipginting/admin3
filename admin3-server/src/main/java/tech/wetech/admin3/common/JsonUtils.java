@@ -26,9 +26,9 @@ public class JsonUtils {
     JsonMapper.Builder builder = new JsonMapper().rebuild();
     builder.serializationInclusion(JsonInclude.Include.NON_NULL);
 //        JSON.configure(SerializationFeature.INDENT_OUTPUT, false);
-    //不显示为null的字段
+    // Do not display null fields
     builder.serializationInclusion(JsonInclude.Include.NON_NULL);
-    //序列化枚举是以ordinal()来输出
+    // Serialize enums using ordinal() output
     builder.addModule(new JavaTimeModule());
     builder.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     builder.enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);

@@ -53,7 +53,7 @@ public class ResourceControllerTest extends AbstractIntegrationTest {
         .header(TOKEN_HEADER_NAME, TOKEN)
         .content("""
           {
-            "name": "测试按钮资源",
+            "name": "Test Button Resource",
             "type": "BUTTON",
             "permission": "test_case_node:create",
             "parentId": 1
@@ -61,7 +61,7 @@ public class ResourceControllerTest extends AbstractIntegrationTest {
           """))
       .andExpect(status().isCreated())
       .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-      .andExpect(jsonPath("name", is("测试按钮资源")));
+      .andExpect(jsonPath("name", is("Test Button Resource")));
   }
 
   @Test
@@ -71,7 +71,7 @@ public class ResourceControllerTest extends AbstractIntegrationTest {
         .header(TOKEN_HEADER_NAME, TOKEN)
         .content("""
            {
-            "name": "测试按钮资源更新",
+            "name": "Test Button Resource Update",
             "type": "BUTTON",
             "permission": "test_case_node2:update",
             "parentId": 1
@@ -79,7 +79,7 @@ public class ResourceControllerTest extends AbstractIntegrationTest {
           """))
       .andExpect(status().isOk())
       .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-      .andExpect(jsonPath("name", is("测试按钮资源更新")));
+      .andExpect(jsonPath("name", is("Test Button Resource Update")));
   }
 
   @Test

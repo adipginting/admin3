@@ -84,11 +84,11 @@ public class Organization extends BaseEntity {
 
   public enum Type {
     /**
-     * 部门
+     * Department
      */
     DEPARTMENT,
     /**
-     * 岗位
+     * Job
      */
     JOB
   }

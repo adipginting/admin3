@@ -6,7 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * 资源
+ * Resource
  *
  * @author cjbi
  */
@@ -25,7 +25,7 @@ public class Resource extends BaseEntity {
   @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
   private Set<Resource> children = new LinkedHashSet<>();
 
-  private String parentIds; //父编号列表
+  private String parentIds; // Parent ID list
 
   private String icon;
   private String url;

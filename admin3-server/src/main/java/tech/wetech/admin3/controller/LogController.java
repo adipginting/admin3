@@ -43,7 +43,7 @@ public class LogController {
 
 
   /**
-   * 清空日志
+   * Clean logs
    *
    * @return
    */

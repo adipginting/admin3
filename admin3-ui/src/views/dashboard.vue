@@ -11,18 +11,18 @@
             </div>
           </div>
           <div class="user-info-list">
-            上次登录时间：
+            Last login time:
             <span>2022-10-01</span>
           </div>
           <div class="user-info-list">
-            上次登录地点：
-            <span>东莞</span>
+            Last login location:
+            <span>Dongguan</span>
           </div>
         </el-card>
         <el-card shadow="hover" style="height: 252px">
           <template #header>
             <div class="clearfix">
-              <span>语言详情</span>
+              <span>Language Details</span>
             </div>
           </template>
           Vue
@@ -45,7 +45,7 @@
                 </el-icon>
                 <div class="grid-cont-right">
                   <div class="grid-num">1234</div>
-                  <div>用户访问量</div>
+                  <div>User Visits</div>
                 </div>
               </div>
             </el-card>
@@ -58,7 +58,7 @@
                 </el-icon>
                 <div class="grid-cont-right">
                   <div class="grid-num">321</div>
-                  <div>系统消息</div>
+                  <div>System Messages</div>
                 </div>
               </div>
             </el-card>
@@ -71,7 +71,7 @@
                 </el-icon>
                 <div class="grid-cont-right">
                   <div class="grid-num">5000</div>
-                  <div>商品数量</div>
+                  <div>Product Count</div>
                 </div>
               </div>
             </el-card>
@@ -80,8 +80,8 @@
         <el-card shadow="hover" style="height: 403px">
           <template #header>
             <div class="clearfix">
-              <span>待办事项</span>
-              <el-button style="float: right; padding: 3px 0" text>添加</el-button>
+              <span>Todo List</span>
+              <el-button style="float: right; padding: 3px 0" text>Add</el-button>
             </div>
           </template>
 
@@ -133,21 +133,21 @@ let userinfo = basicStore.userinfo;
 const options = {
   type: 'bar',
   title: {
-    text: '最近一周各品类销售图'
+    text: 'Sales by Category Last Week'
   },
   xRorate: 25,
-  labels: ['周一', '周二', '周三', '周四', '周五'],
+  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
   datasets: [
     {
-      label: '家电',
+      label: 'Home Appliances',
       data: [234, 278, 270, 190, 230]
     },
     {
-      label: '百货',
+      label: 'Department Store',
       data: [164, 178, 190, 135, 160]
     },
     {
-      label: '食品',
+      label: 'Food',
       data: [144, 198, 150, 235, 120]
     }
   ]
@@ -155,47 +155,47 @@ const options = {
 const options2 = {
   type: 'line',
   title: {
-    text: '最近几个月各品类销售趋势图'
+    text: 'Sales Trend by Category Recent Months'
   },
-  labels: ['6月', '7月', '8月', '9月', '10月'],
+  labels: ['Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
   datasets: [
     {
-      label: '家电',
+      label: 'Home Appliances',
       data: [234, 278, 270, 190, 230]
     },
     {
-      label: '百货',
+      label: 'Department Store',
       data: [164, 178, 150, 135, 160]
     },
     {
-      label: '食品',
+      label: 'Food',
       data: [74, 118, 200, 235, 90]
     }
   ]
 };
 const todoList = reactive([
   {
-    title: '今天要修复100个bug',
+    title: 'Fix 100 bugs today',
     status: false
   },
   {
-    title: '今天要修复100个bug',
+    title: 'Fix 100 bugs today',
     status: false
   },
   {
-    title: '今天要写100行代码加几个bug吧',
+    title: 'Write 100 lines of code and add a few bugs today',
     status: false
   },
   {
-    title: '今天要修复100个bug',
+    title: 'Fix 100 bugs today',
     status: false
   },
   {
-    title: '今天要修复100个bug',
+    title: 'Fix 100 bugs today',
     status: true
   },
   {
-    title: '今天要写100行代码加几个bug吧',
+    title: 'Write 100 lines of code and add a few bugs today',
     status: true
   }
 ]);

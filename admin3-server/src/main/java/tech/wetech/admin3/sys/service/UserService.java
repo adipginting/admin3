@@ -88,7 +88,7 @@ public class UserService {
   public User disableUser(Long userId) {
     UserinfoDTO userInfo = (UserinfoDTO) SessionItemHolder.getItem(Constants.SESSION_CURRENT_USER);
     if (Objects.equals(userInfo.userId(), userId)) {
-      throw new UserException(CommonResultStatus.PARAM_ERROR, "不能禁用自己");
+      throw new UserException(CommonResultStatus.PARAM_ERROR, "Cannot disable yourself");
     }
     User user = findUserById(userId);
     user.setState(User.State.LOCKED);

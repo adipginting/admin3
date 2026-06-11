@@ -4,63 +4,63 @@ import java.security.SecureRandom;
 import java.util.Random;
 
 /**
- * NanoId，一个小型、安全、对 URL友好的唯一字符串 ID 生成器，特点：
+ * NanoId, a small, secure, URL-friendly unique string ID generator, features:
  *
  * <ul>
- *     <li>安全：它使用加密、强大的随机 API，并保证符号的正确分配</li>
- *     <li>体积小：只有 258 bytes 大小（压缩后）、无依赖</li>
- *     <li>紧凑：它使用比 UUID (A-Za-z0-9_~)更多的符号</li>
+ *     <li>Secure: It uses cryptographically strong random APIs and guarantees proper symbol distribution</li>
+ *     <li>Small: Only 258 bytes (compressed), zero dependencies</li>
+ *     <li>Compact: It uses more symbols than UUID (A-Za-z0-9_~)</li>
  * </ul>
  *
  * <p>
- * 此实现的逻辑基于JavaScript的NanoId实现，见：https://github.com/ai/nanoid
+ * This implementation is based on the JavaScript NanoId implementation, see: https://github.com/ai/nanoid
  *
  * @author David Klebanoff
  */
 public class NanoId {
 
   /**
-   * 默认随机数生成器，使用{@link SecureRandom}确保健壮性
+   * Default random number generator, uses {@link SecureRandom} for robustness
    */
   private static final SecureRandom DEFAULT_NUMBER_GENERATOR = new SecureRandom();
 
   /**
-   * 默认随机字母表，使用URL安全的Base64字符
+   * Default random alphabet, uses URL-safe Base64 characters
    */
   private static final char[] DEFAULT_ALPHABET =
     "_-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 
   /**
-   * 默认长度
+   * Default length
    */
   public static final int DEFAULT_SIZE = 21;
 
   /**
-   * 生成伪随机的NanoId字符串，长度为默认的{@link #DEFAULT_SIZE}，使用密码安全的伪随机生成器
+   * Generate a pseudo-random NanoId string with the default length {@link #DEFAULT_SIZE}, using a cryptographically secure pseudo-random generator
    *
-   * @return 伪随机的NanoId字符串
+   * @return Pseudo-random NanoId string
    */
   public static String randomNanoId() {
     return randomNanoId(DEFAULT_SIZE);
   }
 
   /**
-   * 生成伪随机的NanoId字符串
+   * Generate a pseudo-random NanoId string
    *
-   * @param size ID长度
-   * @return 伪随机的NanoId字符串
+   * @param size ID length
+   * @return Pseudo-random NanoId string
    */
   public static String randomNanoId(int size) {
     return randomNanoId(null, null, size);
   }
 
   /**
-   * 生成伪随机的NanoId字符串
+   * Generate a pseudo-random NanoId string
    *
-   * @param random   随机数生成器
-   * @param alphabet 随机字母表
-   * @param size     ID长度
-   * @return 伪随机的NanoId字符串
+   * @param random   Random number generator
+   * @param alphabet Random alphabet
+   * @param size     ID length
+   * @return Pseudo-random NanoId string
    */
   public static String randomNanoId(Random random, char[] alphabet, int size) {
     if (random == null) {

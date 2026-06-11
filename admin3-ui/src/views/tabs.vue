@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<el-tabs v-model="message">
-			<el-tab-pane :label="`未读消息(${state.unread.length})`" name="first">
+			<el-tab-pane :label="`Unread Messages(${state.unread.length})`" name="first">
 				<el-table :data="state.unread" :show-header="false" style="width: 100%">
 					<el-table-column>
 						<template #default="scope">
@@ -11,15 +11,15 @@
 					<el-table-column prop="date" width="180"></el-table-column>
 					<el-table-column width="120">
 						<template #default="scope">
-							<el-button size="small" @click="handleRead(scope.$index)">标为已读</el-button>
+							<el-button size="small" @click="handleRead(scope.$index)">Mark as Read</el-button>
 						</template>
 					</el-table-column>
 				</el-table>
 				<div class="handle-row">
-					<el-button type="primary">全部标为已读</el-button>
+					<el-button type="primary">Mark All as Read</el-button>
 				</div>
 			</el-tab-pane>
-			<el-tab-pane :label="`已读消息(${state.read.length})`" name="second">
+			<el-tab-pane :label="`Read Messages(${state.read.length})`" name="second">
 				<template v-if="message === 'second'">
 					<el-table :data="state.read" :show-header="false" style="width: 100%">
 						<el-table-column>
@@ -30,16 +30,16 @@
 						<el-table-column prop="date" width="150"></el-table-column>
 						<el-table-column width="120">
 							<template #default="scope">
-								<el-button type="danger" @click="handleDel(scope.$index)">删除</el-button>
+								<el-button type="danger" @click="handleDel(scope.$index)">Delete</el-button>
 							</template>
 						</el-table-column>
 					</el-table>
 					<div class="handle-row">
-						<el-button type="danger">删除全部</el-button>
+						<el-button type="danger">Delete All</el-button>
 					</div>
 				</template>
 			</el-tab-pane>
-			<el-tab-pane :label="`回收站(${state.recycle.length})`" name="third">
+			<el-tab-pane :label="`Recycle Bin(${state.recycle.length})`" name="third">
 				<template v-if="message === 'third'">
 					<el-table :data="state.recycle" :show-header="false" style="width: 100%">
 						<el-table-column>
@@ -50,12 +50,12 @@
 						<el-table-column prop="date" width="150"></el-table-column>
 						<el-table-column width="120">
 							<template #default="scope">
-								<el-button @click="handleRestore(scope.$index)">还原</el-button>
+								<el-button @click="handleRestore(scope.$index)">Restore</el-button>
 							</template>
 						</el-table-column>
 					</el-table>
 					<div class="handle-row">
-						<el-button type="danger">清空回收站</el-button>
+						<el-button type="danger">Empty Recycle Bin</el-button>
 					</div>
 				</template>
 			</el-tab-pane>
@@ -71,23 +71,23 @@ const state = reactive({
 	unread: [
 		{
 			date: '2018-04-19 20:00:00',
-			title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
+			title: '[System Notice] The system will be under maintenance from 2 AM to 5 AM tonight'
 		},
 		{
 			date: '2018-04-19 21:00:00',
-			title: '今晚12点整发大红包，先到先得'
+			title: 'Red envelope giveaway at 12 tonight, first come first served'
 		}
 	],
 	read: [
 		{
 			date: '2018-04-19 20:00:00',
-			title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
+			title: '[System Notice] The system will be under maintenance from 2 AM to 5 AM tonight'
 		}
 	],
 	recycle: [
 		{
 			date: '2018-04-19 20:00:00',
-			title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
+			title: '[System Notice] The system will be under maintenance from 2 AM to 5 AM tonight'
 		}
 	]
 });

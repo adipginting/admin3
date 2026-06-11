@@ -4,41 +4,41 @@
       <div class="handle-box">
         <el-button type="primary" :icon="Plus" @click="addVisible = true;Object.assign(form, new StorageImpl());"
                    v-action:storage:create>
-          新增对象存储
+          Add Object Storage
         </el-button>
       </div>
       <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
-        <el-table-column prop="name" label="名称" width="120"></el-table-column>
-        <el-table-column prop="storageId" label="标识" align="center"></el-table-column>
-        <el-table-column prop="type" label="类型" width="120">
+        <el-table-column prop="name" label="Name" width="120"></el-table-column>
+        <el-table-column prop="storageId" label="ID" align="center"></el-table-column>
+        <el-table-column prop="type" label="Type" width="120">
           <template #default="{ row }">
             <el-tag class="ml-2" type="success">{{ row.type }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="bucketName" label="Bucket名称"></el-table-column>
+        <el-table-column prop="bucketName" label="Bucket Name"></el-table-column>
         <el-table-column prop="endpoint" label="Endpoint"></el-table-column>
-        <el-table-column prop="address" label="访问地址"></el-table-column>
-        <el-table-column prop="storagePath" label="存储目录"></el-table-column>
-        <el-table-column prop="isDefault" label="默认对象存储">
+        <el-table-column prop="address" label="Access URL"></el-table-column>
+        <el-table-column prop="storagePath" label="Storage Path"></el-table-column>
+        <el-table-column prop="isDefault" label="Default Storage">
           <template #default="{ row }">
-            <el-tag effect="dark" link v-if="row.isDefault" v-action:storage:markAsDefault>默认使用</el-tag>
-            <el-popconfirm title="设为默认?" v-else @confirm="handleMarkAsDefaultConfig(row)">
+            <el-tag effect="dark" link v-if="row.isDefault" v-action:storage:markAsDefault>Default</el-tag>
+            <el-popconfirm title="Set as default?" v-else @confirm="handleMarkAsDefaultConfig(row)">
               <template #reference>
-                <el-button link>设为默认</el-button>
+                <el-button link>Set as default</el-button>
               </template>
             </el-popconfirm>
           </template>
         </el-table-column>
-        <el-table-column prop="createUser" label="创建人"></el-table-column>
-        <el-table-column prop="createTime" label="创建时间"></el-table-column>
-        <el-table-column label="操作">
+        <el-table-column prop="createUser" label="Created By"></el-table-column>
+        <el-table-column prop="createTime" label="Created Time"></el-table-column>
+        <el-table-column label="Operations">
           <template #default="scope">
             <el-button-group>
               <el-button text :icon="Edit" @click="handleEdit(scope.row)" v-action:storage:update>
-                编辑
+                Edit
               </el-button>
               <el-button text :icon="Delete" class="red" @click="handleDelete(scope.row)" v-action:storage:delete>
-                删除
+                Delete
               </el-button>
             </el-button-group>
           </template>
@@ -46,26 +46,26 @@
       </el-table>
     </div>
 
-    <!-- 新增弹出框 -->
-    <el-dialog title="新增" v-model="addVisible" width="35%">
+    <!-- Add Dialog -->
+    <el-dialog title="Add" v-model="addVisible" width="35%">
       <el-form label-width="100px">
-        <el-form-item label="名称">
+        <el-form-item label="Name">
           <el-input v-model="form.name"/>
         </el-form-item>
-        <el-form-item label="类型">
+        <el-form-item label="Type">
           <el-radio-group v-model="form.type" size="small" @change="handleTypeChange">
-            <el-radio-button label="OSS">阿里云 OSS</el-radio-button>
-            <el-radio-button label="OBS">华为云 OBS</el-radio-button>
-            <el-radio-button label="S3">其他 S3 协议</el-radio-button>
-            <el-radio-button label="LOCAL">本地</el-radio-button>
+            <el-radio-button label="OSS">Alibaba Cloud OSS</el-radio-button>
+            <el-radio-button label="OBS">Huawei Cloud OBS</el-radio-button>
+            <el-radio-button label="S3">Other S3 Protocol</el-radio-button>
+            <el-radio-button label="LOCAL">Local</el-radio-button>
           </el-radio-group>
         </el-form-item>
-        <el-alert title="以下所有输入都支持环境变量，使用语法为 {{VARIABLE_NAME}}" show-icon center :closable="false" style="margin-bottom: 18px"/>
+        <el-alert title="All inputs below support environment variables using the syntax {{VARIABLE_NAME}}" show-icon center :closable="false" style="margin-bottom: 18px"/>
         <el-form-item label="Endpoint" v-if="form.type!=='LOCAL'">
-          <el-input v-model="form.endpoint" placeholder="对象存储资源的Endpoint"/>
+          <el-input v-model="form.endpoint" placeholder="Object storage endpoint"/>
         </el-form-item>
-        <el-form-item label="Bucket 名称" v-if="form.type!=='LOCAL'">
-          <el-input v-model="form.bucketName" placeholder="对象存储资源的桶名称"/>
+        <el-form-item label="Bucket Name" v-if="form.type!=='LOCAL'">
+          <el-input v-model="form.bucketName" placeholder="Object storage bucket name"/>
         </el-form-item>
         <el-form-item label="AccessKey" v-if="form.type!=='LOCAL'">
           <el-input v-model="form.accessKey"/>
@@ -73,41 +73,41 @@
         <el-form-item label="SecretKey" v-if="form.type!=='LOCAL'">
           <el-input v-model="form.secretKey"/>
         </el-form-item>
-        <el-form-item label="访问地址">
-          <el-input v-model="form.address" placeholder="不填写，则使用厂商地址（本地存储除外）"/>
+        <el-form-item label="Access URL">
+          <el-input v-model="form.address" placeholder="Leave blank to use vendor address (except local storage)"/>
         </el-form-item>
-        <el-form-item label="存储目录">
-          <el-input v-model="form.storagePath" placeholder="不填写，默认存储到 files 目录下"/>
+        <el-form-item label="Storage Path">
+          <el-input v-model="form.storagePath" placeholder="Leave blank to store in files directory by default"/>
         </el-form-item>
       </el-form>
       <template #footer>
 				<span class="dialog-footer">
-					<el-button @click="addVisible = false">取 消</el-button>
-					<el-button type="primary" @click="handleCreateConfig">确 定</el-button>
+					<el-button @click="addVisible = false">Cancel</el-button>
+					<el-button type="primary" @click="handleCreateConfig">OK</el-button>
 				</span>
       </template>
     </el-dialog>
 
-    <!-- 修改弹出框 -->
-    <el-dialog title="新增" v-model="editVisible" width="35%">
+    <!-- Edit Dialog -->
+    <el-dialog title="Edit" v-model="editVisible" width="35%">
       <el-form label-width="100px">
-        <el-form-item label="名称">
+        <el-form-item label="Name">
           <el-input v-model="form.name"/>
         </el-form-item>
-        <el-form-item label="类型">
+        <el-form-item label="Type">
           <el-radio-group v-model="form.type" size="small" @change="handleTypeChange">
-            <el-radio-button label="OSS">阿里云 OSS</el-radio-button>
-            <el-radio-button label="OBS">华为云 OBS</el-radio-button>
-            <el-radio-button label="S3">其他 S3 协议</el-radio-button>
-            <el-radio-button label="LOCAL">本地</el-radio-button>
+            <el-radio-button label="OSS">Alibaba Cloud OSS</el-radio-button>
+            <el-radio-button label="OBS">Huawei Cloud OBS</el-radio-button>
+            <el-radio-button label="S3">Other S3 Protocol</el-radio-button>
+            <el-radio-button label="LOCAL">Local</el-radio-button>
           </el-radio-group>
         </el-form-item>
-        <el-alert title="以下所有输入都支持环境变量，使用语法为 {{VARIABLE_NAME}}" show-icon center :closable="false" style="margin-bottom: 18px"/>
+        <el-alert title="All inputs below support environment variables using the syntax {{VARIABLE_NAME}}" show-icon center :closable="false" style="margin-bottom: 18px"/>
         <el-form-item label="Endpoint" v-if="form.type!=='LOCAL'">
-          <el-input v-model="form.endpoint" placeholder="对象存储资源的Endpoint"/>
+          <el-input v-model="form.endpoint" placeholder="Object storage endpoint"/>
         </el-form-item>
-        <el-form-item label="Bucket 名称" v-if="form.type!=='LOCAL'">
-          <el-input v-model="form.bucketName" placeholder="对象存储资源的桶名称"/>
+        <el-form-item label="Bucket Name" v-if="form.type!=='LOCAL'">
+          <el-input v-model="form.bucketName" placeholder="Object storage bucket name"/>
         </el-form-item>
         <el-form-item label="AccessKey" v-if="form.type!=='LOCAL'">
           <el-input v-model="form.accessKey"/>
@@ -115,17 +115,17 @@
         <el-form-item label="SecretKey" v-if="form.type!=='LOCAL'">
           <el-input v-model="form.secretKey"/>
         </el-form-item>
-        <el-form-item label="访问地址">
+        <el-form-item label="Access URL">
           <el-input v-model="form.address"/>
         </el-form-item>
-        <el-form-item label="存储目录">
-          <el-input v-model="form.storagePath" placeholder="不填写，默认存储到 files 目录下"/>
+        <el-form-item label="Storage Path">
+          <el-input v-model="form.storagePath" placeholder="Leave blank to store in files directory by default"/>
         </el-form-item>
       </el-form>
       <template #footer>
 				<span class="dialog-footer">
-					<el-button @click="editVisible = false">取 消</el-button>
-					<el-button type="primary" @click="handleUpdateConfig">确 定</el-button>
+					<el-button @click="editVisible = false">Cancel</el-button>
+					<el-button type="primary" @click="handleUpdateConfig">OK</el-button>
 				</span>
       </template>
     </el-dialog>
@@ -183,7 +183,7 @@ let form = reactive<Storage>(new StorageImpl());
 
 const tableData = ref<Storage[]>([]);
 
-// 获取表格数据
+// Get table data
 const getData = () => {
   getStorageConfigList()
     .then(res => {
@@ -208,12 +208,12 @@ const handleEdit = (record: any) => {
 }
 
 const handleDelete = (record: any) => {
-  ElMessageBox.confirm('确定要删除吗？', '提示', {
+  ElMessageBox.confirm('Are you sure you want to delete?', 'Warning', {
     type: 'warning'
   }).then(() => {
     deleteStorageConfig(record.id).then(res => {
       getData();
-      ElMessage.success('删除成功');
+      ElMessage.success('Deleted successfully');
     });
   }).catch(() => {
   });
@@ -237,7 +237,7 @@ const handleTypeChange = () => {
 const handleCreateConfig = () => {
   createStorageConfig(form).then(res => {
     getData();
-    ElMessage.success('新增成功');
+    ElMessage.success('Added successfully');
     addVisible.value = false;
   })
 }
@@ -245,7 +245,7 @@ const handleCreateConfig = () => {
 const handleUpdateConfig = () => {
   updateStorageConfig(form.id || -1, form).then(res => {
     getData();
-    ElMessage.success('修改成功');
+    ElMessage.success('Updated successfully');
     editVisible.value = false;
   });
 }

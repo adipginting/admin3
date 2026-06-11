@@ -1,38 +1,38 @@
-# 对象存储
+# Object Storage
 
-Admin3 已实现阿里云OSS、华为云OBS、MinIO 等符合 S3 标准的所有对象存储方案的统一封装，支持同时使用多个对象存储。
+Admin3 has implemented unified encapsulation for all S3-compliant object storage solutions such as Alibaba Cloud OSS, Huawei Cloud OBS, and MinIO, supporting the simultaneous use of multiple object storage configurations.
 
-## 配置
+## Configuration
 
-1. 在`系统管理>对象存储` 页面新增对象存储
+1. Add object storage in the `System Management > Object Storage` page
 
-   > 访问域名不填写，则返回对象存储的厂商地址（非代理模式）<br>
-   > 代理路径为 `{{domain}}/admin3/storage/fetch/`，{{domain}} 根据实际外网地址配置 <br>
-   > 存储目录不配置默认为 `files` <br>
-   > 支持读取系统环境变量和JDK配置作为配置参数，使用语法为 {{VARIABLE_NAME}}
+   > If the access domain is not filled in, the vendor address of the object storage will be returned (non-proxy mode) <br>
+   > The proxy path is `{{domain}}/admin3/storage/fetch/`, where {{domain}} is configured according to the actual external address <br>
+   > The storage directory defaults to `files` if not configured <br>
+   > Supports reading system environment variables and JDK configurations as configuration parameters, using the syntax {{VARIABLE_NAME}}
 
    ![](image/storage.png)
 
-2. 设置为默认存储位置
+2. Set as default storage location
 
-   > 上传接口可指定 storageId 来选择目标存储位置，多个对象存储可同时使用互不影响
+   > The upload interface can specify a storageId to select the target storage location; multiple object storages can be used simultaneously without affecting each other.
 
    ![img.png](image/mark-as-default.png)
 
-## 文件上传接口
+## File Upload Interface
 
 POST /storage/upload
 
 Content-Type: multipart/form-data
 
-表单参数
+Form Parameters
 
-| 名称        | 说明                 |
+| Name        | Description                 |
 |-----------|--------------------|
-| files     | 多个 File 文件      |
-| storageId | 即对象存储标识，指定上传位置，非必填，不填则默认位置 |
+| files     | Multiple File files      |
+| storageId | Object storage identifier, specifies the upload location, optional, defaults to default location if not filled |
 
-返回
+Response
 
 ```json lines
 [
@@ -45,21 +45,20 @@ Content-Type: multipart/form-data
 ]
 ```
 
-## 获取文件
+## Fetch File
 
 POST /storage/fetch/{key:.+}
 
-响应头
+Response Headers
 
 Content-Type: application/octet-stream
 
-## 下载文件
+## Download File
 
 POST /storage/download/{key:.+}
 
-响应头
+Response Headers
 
 Content-Type: application/octet-stream
 
 Content-Disposition: "attachment; filename=\"" + file.getFilename() + "\""
-

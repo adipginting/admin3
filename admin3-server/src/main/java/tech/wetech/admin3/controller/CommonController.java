@@ -10,7 +10,7 @@ import tech.wetech.admin3.Admin3Properties;
 import java.util.List;
 
 /**
- * 通用功能控制器，声明全局枚举，数据字典等
+ * Common function controller, declares global enums, data dictionaries, etc.
  *
  * @author cjbi
  */

@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 会话
+ * Session
  *
  * @author cjbi
  */

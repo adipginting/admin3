@@ -72,7 +72,7 @@ public class OrganizationController {
   public ResponseEntity<Void> deleteOrganization(@PathVariable Long organizationId) {
     Organization organization = organizationService.findOrganization(organizationId);
     if (userService.existsUsers(organization)) {
-      throw new UserException(CommonResultStatus.FAIL, "节点存在用户，不能删除");
+      throw new UserException(CommonResultStatus.FAIL, "Node contains users and cannot be deleted");
     }
     organizationService.deleteOrganization(organizationId);
     return ResponseEntity.noContent().build();

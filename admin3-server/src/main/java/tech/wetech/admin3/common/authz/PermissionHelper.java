@@ -38,7 +38,7 @@ public class PermissionHelper {
   }
 
   /**
-   * 判断是否有对应权限
+   * Check if the corresponding permission exists
    *
    * @param permissions
    * @param permission

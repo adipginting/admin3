@@ -15,23 +15,23 @@ import java.time.LocalDateTime;
 public class StorageFile extends BaseEntity {
 
   /**
-   * 文件的唯一索引
+   * Unique index of the file
    */
   @Column(name = "`key`")
   private String key;
 
   /**
-   * 文件名
+   * File name
    */
   private String name;
 
   /**
-   * 文件类型
+   * File type
    */
   private String type;
 
   /**
-   * 文件大小
+   * File size
    */
   private Long size;
 

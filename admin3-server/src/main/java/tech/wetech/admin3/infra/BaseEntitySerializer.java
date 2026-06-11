@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 解决jpa关联实体序列化的问题
+ * Solve JPA associated entity serialization issues
  *
  * @author cjbi
  * @date 2022/9/16

@@ -40,13 +40,13 @@ public class S3Storage implements Storage {
   }
 
   /**
-   * 上传文件
+   * Upload file
    *
-   * @param bucketName  bucket名称
-   * @param objectName  文件名称
-   * @param is      文件流
-   * @param contentType 类型
-   * @param contentLength 大小
+   * @param bucketName  Bucket name
+   * @param objectName  File name
+   * @param is      File stream
+   * @param contentType Type
+   * @param contentLength Size
    * @see <a href= "http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/PutObject">AWS
    * API Documentation</a>
    */

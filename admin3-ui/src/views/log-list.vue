@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <div class="handle-box">
-        <el-select v-model="query.typeNames" placeholder="操作类型" class="handle-select mr10" style="width: 150px"
+        <el-select v-model="query.typeNames" placeholder="Operation Type" class="handle-select mr10" style="width: 150px"
                    @change="handleSelectTypeInfoChange" filterable multiple clearable>
           <el-option
             v-for="item in typeInfo"
@@ -11,19 +11,19 @@
             :value="item.value"
           />
         </el-select>
-        <el-button type="primary" :icon="Refresh" @click="handleRefresh">刷新日志</el-button>
-        <el-button type="danger" :icon="Delete" @click="handleCleanLogs" v-action:log:clean>清空日志</el-button>
+        <el-button type="primary" :icon="Refresh" @click="handleRefresh">Refresh Logs</el-button>
+        <el-button type="danger" :icon="Delete" @click="handleCleanLogs" v-action:log:clean>Clear Logs</el-button>
       </div>
       <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
         <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
-        <el-table-column prop="user.username" label="用户" width="120"></el-table-column>
-        <el-table-column prop="typeNameLabel" label="操作类型" width="120">
+        <el-table-column prop="user.username" label="User" width="120"></el-table-column>
+        <el-table-column prop="typeNameLabel" label="Operation Type" width="120">
           <template #default="{ row }">
             <span>{{ typeInfo?.find(t => t.value === row.typeName)?.label }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="content" label="说明"></el-table-column>
-        <el-table-column prop="occurredOn" label="操作时间"></el-table-column>
+        <el-table-column prop="content" label="Description"></el-table-column>
+        <el-table-column prop="occurredOn" label="Operation Time"></el-table-column>
       </el-table>
       <div class="pagination">
         <el-pagination
@@ -70,14 +70,14 @@ const tableData = ref<TableItem[]>([]);
 const pageTotal = ref(0);
 const typeInfo = ref<TypeInfo[]>();
 
-//获取类型
+// Get types
 const getTypeInfo = () => {
   getEventTypes().then(res => {
     typeInfo.value = res.data;
   });
 };
 getTypeInfo();
-// 获取表格数据
+// Get table data
 const getData = () => {
   getLogList({
     page: query.pageIndex,
@@ -89,29 +89,29 @@ const getData = () => {
   });
 };
 getData();
-// 查询操作
+// Search operation
 const handleSelectTypeInfoChange = () => {
   query.pageIndex = 1;
   getData();
 };
-// 分页导航
+// Pagination
 const handlePageChange = (val: number) => {
   query.pageIndex = val;
   getData();
 };
-// 刷新日志
+// Refresh logs
 const handleRefresh = () => {
   getData();
-  ElMessage.success('刷新成功');
+  ElMessage.success('Refreshed successfully');
 }
-// 清空日志
+// Clear logs
 const handleCleanLogs = () => {
-  // 二次确认删除
-  ElMessageBox.confirm('确定要清空所有日志吗？', '提示', {
+  // Confirm delete
+  ElMessageBox.confirm('Are you sure you want to clear all logs?', 'Warning', {
     type: 'warning'
   }).then(() => {
     cleanLogs().then(_ => {
-      ElMessage.success('清空成功');
+      ElMessage.success('Cleared successfully');
       getData();
     });
   })

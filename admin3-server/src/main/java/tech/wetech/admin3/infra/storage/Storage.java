@@ -11,12 +11,12 @@ public interface Storage {
   String getId();
 
   /**
-   * 存储一个文件对象
+   * Store a file object
    *
-   * @param inputStream   文件输入流
-   * @param contentLength 文件长度
-   * @param contentType   文件类型
-   * @param filename      文件名
+   * @param inputStream   File input stream
+   * @param contentLength File length
+   * @param contentType   File type
+   * @param filename      File name
    */
   void store(InputStream inputStream, long contentLength, String contentType, String filename);
 

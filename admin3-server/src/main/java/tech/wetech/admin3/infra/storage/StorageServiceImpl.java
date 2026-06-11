@@ -47,7 +47,7 @@ public class StorageServiceImpl implements StorageService {
   @Override
   public StorageConfig getConfig(Long id) {
     return storageConfigRepository.findById(id)
-      .orElseThrow(() -> new StorageException(FAIL, "存储配置不存在"));
+      .orElseThrow(() -> new StorageException(FAIL, "Storage configuration does not exist"));
   }
 
   @Override
@@ -90,7 +90,7 @@ public class StorageServiceImpl implements StorageService {
   @Transactional
   public void deleteConfig(StorageConfig storageConfig) {
     if (storageConfig.isDefault()) {
-      throw new StorageException(FAIL, "不能删除默认配置");
+      throw new StorageException(FAIL, "Cannot delete default configuration");
     }
     storageConfigRepository.delete(storageConfig);
     DomainEventPublisher.instance().publish(new StorageConfigDeleted(storageConfig));
