@@ -4,7 +4,7 @@
       <el-row>
         <el-col :xl="6" :lg="6" style="border-right: 1px solid #dcdfe6;">
           <div style="padding-right: 10px">
-            <div style="margin-bottom: 24px; font-weight: 700">组织架构</div>
+            <div style="margin-bottom: 24px; font-weight: 700">Organization</div>
             <el-divider></el-divider>
             <el-tree
               :data="treeData"
@@ -28,18 +28,18 @@
                     <el-dropdown-menu>
                       <span v-action:organization:create>
                         <el-dropdown-item
-                          @click.stop="handleAddOrgNode(data)">新增</el-dropdown-item>
+                          @click.stop="handleAddOrgNode(data)">Add</el-dropdown-item>
                       </span>
                       <span v-if="data.id!==1" v-action:organization:create>
                         <el-dropdown-item
                           @click.stop="handleUpdateOrgNode(data,node?.parent?.data)"
                         >
-                        编辑
+                        Edit
                       </el-dropdown-item>
                       </span>
                       <span v-if="data.id!=1" v-action:organization:delete>
                         <el-dropdown-item @click.stop="saveDeleteOrgNode(data)">
-                        <span style="color: #f56c6c">删除</span>
+                        <span style="color: #f56c6c">Delete</span>
                       </el-dropdown-item>
                       </span>
                     </el-dropdown-menu>
@@ -53,15 +53,15 @@
         <el-col :xl="18" :lg="18" style="border-right: 1px solid #dcdfe6">
           <div style="padding-left: 10px">
             <div class="handle-box">
-              <el-input v-model="query.username" placeholder="用户名" class="handle-input mr10" clearable></el-input>
-              <el-select v-model="query.state" placeholder="状态" class="handle-select mr10" clearable>
-                <el-option key="1" label="正常" value="NORMAL"></el-option>
-                <el-option key="2" label="锁定" value="LOCKED"></el-option>
+              <el-input v-model="query.username" placeholder="Username" class="handle-input mr10" clearable></el-input>
+              <el-select v-model="query.state" placeholder="Status" class="handle-select mr10" clearable>
+                <el-option key="1" label="Normal" value="NORMAL"></el-option>
+                <el-option key="2" label="Locked" value="LOCKED"></el-option>
               </el-select>
               <el-date-picker
                 v-model="query.lastLoginTimeStart"
                 type="datetime"
-                placeholder="最后登录时间开始"
+                placeholder="Last login time start"
                 class="handle-select mr10"
                 clearable
                 value-format="YYYY-MM-DD HH:mm:ss"
@@ -69,25 +69,25 @@
               <el-date-picker
                 v-model="query.lastLoginTimeEnd"
                 type="datetime"
-                placeholder="最后登录时间结束"
+                placeholder="Last login time end"
                 class="handle-select mr10"
                 clearable
                 value-format="YYYY-MM-DD HH:mm:ss"
               ></el-date-picker>
-              <el-button type="primary" :icon="Search" @click="handleSearch">搜索</el-button>
+              <el-button type="primary" :icon="Search" @click="handleSearch">Search</el-button>
               <el-button type="primary" :icon="Plus" @click="addVisible = true;Object.assign(form, new User())"
-                         v-action:user:create>新增
+                         v-action:user:create>Add
               </el-button>
             </div>
             <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
               <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
-              <el-table-column prop="username" label="用户名"></el-table-column>
-              <el-table-column prop="gender" label="性别">
+              <el-table-column prop="username" label="Username"></el-table-column>
+              <el-table-column prop="gender" label="Gender">
                 <template #default="{ row }">
-                  <span>{{ row.gender === 'MALE' ? '男' : '女' }}</span>
+                  <span>{{ row.gender === 'MALE' ? 'Male' : 'Female' }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="头像" align="center">
+              <el-table-column label="Avatar" align="center">
                 <template #default="scope">
                   <el-image
                     class="table-td-thumb"
@@ -99,40 +99,40 @@
                   </el-image>
                 </template>
               </el-table-column>
-              <el-table-column label="状态" align="center">
+              <el-table-column label="Status" align="center">
                 <template #default="scope">
                   <el-tag
                     :type="scope.row.state === 'NORMAL' ? 'success' : scope.row.state === 'LOCKED' ? 'danger' : ''"
                   >
-                    {{ scope.row.state === 'NORMAL' ? '正常' : scope.row.state === 'LOCKED' ? '锁定' : '' }}
+                    {{ scope.row.state === 'NORMAL' ? 'Normal' : scope.row.state === 'LOCKED' ? 'Locked' : '' }}
                   </el-tag>
                 </template>
               </el-table-column>
 
-              <el-table-column prop="createdTime" label="注册时间"></el-table-column>
-              <el-table-column prop="lastLoginTime" label="最后登录时间"></el-table-column>
-              <el-table-column prop="orgFullName" label="所属组织"></el-table-column>
-              <el-table-column label="操作" width="300" fixed="right">
+              <el-table-column prop="createdTime" label="Registration Time"></el-table-column>
+              <el-table-column prop="lastLoginTime" label="Last Login Time"></el-table-column>
+              <el-table-column prop="orgFullName" label="Organization"></el-table-column>
+              <el-table-column label="Operations" width="300" fixed="right">
                 <template #default="scope">
-                  <el-popconfirm title="确定要禁用?" @confirm="handleDisable(scope.row)">
+                  <el-popconfirm title="Disable this user?" @confirm="handleDisable(scope.row)">
                     <template #reference>
                       <el-button v-if="scope.row.state==='NORMAL'" text :icon="Lock" v-action:user:update>
-                        禁用
+                        Disable
                       </el-button>
                     </template>
                   </el-popconfirm>
-                  <el-popconfirm title="确定要启用?" @confirm="handleEnable(scope.row)">
+                  <el-popconfirm title="Enable this user?" @confirm="handleEnable(scope.row)">
                     <template #reference>
                       <el-button v-if="scope.row.state==='LOCKED'" text :icon="Unlock" v-action:user:update>
-                        启用
+                        Enable
                       </el-button>
                     </template>
                   </el-popconfirm>
                   <el-button text :icon="Edit" @click="handleEdit(scope.$index, scope.row)" v-action:user:update>
-                    编辑
+                    Edit
                   </el-button>
                   <el-button text :icon="Delete" class="red" @click="handleDelete(scope.row)" v-action:user:delete>
-                    删除
+                    Delete
                   </el-button>
                 </template>
               </el-table-column>
@@ -152,106 +152,106 @@
       </el-row>
     </div>
 
-    <!-- 新增组织架构树 -->
-    <el-dialog title="新增" v-model="addOrgDialogVisible" width="30%">
+    <!-- Add Organization -->
+    <el-dialog title="Add" v-model="addOrgDialogVisible" width="30%">
       <el-form label-width="70px">
-        <el-form-item label="上级节点">
+        <el-form-item label="Parent Node">
           <el-input v-model="orgForm.parentName" disabled></el-input>
         </el-form-item>
-        <el-form-item label="名称">
+        <el-form-item label="Name">
           <el-input v-model="orgForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="类型" prop="type">
+        <el-form-item label="Type" prop="type">
           <el-radio-group v-model="orgForm.type">
-            <el-radio :label="OrgTypeEum.DEPART">部门</el-radio>
-            <el-radio :label="OrgTypeEum.JOB">岗位</el-radio>
+            <el-radio :label="OrgTypeEum.DEPART">Department</el-radio>
+            <el-radio :label="OrgTypeEum.JOB">Job</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
       <template #footer>
-				<span class="dialog-footer">
-					<el-button @click="addOrgDialogVisible = false">取 消</el-button>
-					<el-button type="primary" @click="saveAddOrgNode">确 定</el-button>
-				</span>
+        <span class="dialog-footer">
+          <el-button @click="addOrgDialogVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="saveAddOrgNode">OK</el-button>
+        </span>
       </template>
     </el-dialog>
 
-    <!-- 编辑组织架构树 -->
-    <el-dialog title="编辑" v-model="updateOrgDialogVisible" width="30%">
+    <!-- Edit Organization -->
+    <el-dialog title="Edit" v-model="updateOrgDialogVisible" width="30%">
       <el-form label-width="70px">
-        <el-form-item label="上级节点">
+        <el-form-item label="Parent Node">
           <el-input v-model="orgForm.parentName" disabled></el-input>
         </el-form-item>
-        <el-form-item label="名称">
+        <el-form-item label="Name">
           <el-input v-model="orgForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="类型" prop="type">
+        <el-form-item label="Type" prop="type">
           <el-radio-group v-model="orgForm.type" disabled>
-            <el-radio :label="OrgTypeEum.DEPART">部门</el-radio>
-            <el-radio :label="OrgTypeEum.JOB">岗位</el-radio>
+            <el-radio :label="OrgTypeEum.DEPART">Department</el-radio>
+            <el-radio :label="OrgTypeEum.JOB">Job</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
       <template #footer>
-				<span class="dialog-footer">
-					<el-button @click="updateOrgDialogVisible = false">取 消</el-button>
-					<el-button type="primary" @click="saveUpdateOrgNode">确 定</el-button>
-				</span>
+        <span class="dialog-footer">
+          <el-button @click="updateOrgDialogVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="saveUpdateOrgNode">OK</el-button>
+        </span>
       </template>
     </el-dialog>
 
-    <!-- 新增用户弹出框 -->
-    <el-dialog title="新增" v-model="addVisible" width="30%">
+    <!-- Add User Dialog -->
+    <el-dialog title="Add" v-model="addVisible" width="30%">
       <el-form label-width="70px">
-        <el-form-item label="所属组织">
+        <el-form-item label="Organization">
           <el-input v-model="selectedNode.name" disabled></el-input>
         </el-form-item>
         <el-input v-model="form.avatar" hidden="hidden" v-show="false"></el-input>
-        <el-form-item label="用户名">
+        <el-form-item label="Username">
           <el-input v-model="form.username"></el-input>
         </el-form-item>
-        <el-form-item label="性别">
+        <el-form-item label="Gender">
           <el-radio-group v-model="form.gender">
-            <el-radio label="MALE">男</el-radio>
-            <el-radio label="FEMALE">女</el-radio>
+            <el-radio label="MALE">Male</el-radio>
+            <el-radio label="FEMALE">Female</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="头像">
+        <el-form-item label="Avatar">
           <AvatarUpload :img-src="form.avatar" @on-select="onAvatarSelect"/>
         </el-form-item>
       </el-form>
       <template #footer>
-				<span class="dialog-footer">
-					<el-button @click="addVisible = false">取 消</el-button>
-					<el-button type="primary" @click="saveAdd">确 定</el-button>
-				</span>
+        <span class="dialog-footer">
+          <el-button @click="addVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="saveAdd">OK</el-button>
+        </span>
       </template>
     </el-dialog>
-    <!-- 编辑用户弹出框 -->
-    <el-dialog title="编辑" v-model="editVisible" width="30%">
+    <!-- Edit User Dialog -->
+    <el-dialog title="Edit" v-model="editVisible" width="30%">
       <el-form label-width="70px">
-        <el-form-item label="所属组织">
+        <el-form-item label="Organization">
           <el-input v-model="selectedNode.name" disabled></el-input>
         </el-form-item>
         <el-input v-model="form.avatar" hidden="hidden" v-show="false"></el-input>
-        <el-form-item label="用户名">
+        <el-form-item label="Username">
           <el-input v-model="form.username" disabled></el-input>
         </el-form-item>
-        <el-form-item label="性别">
+        <el-form-item label="Gender">
           <el-radio-group v-model="form.gender">
-            <el-radio label="MALE">男</el-radio>
-            <el-radio label="FEMALE">女</el-radio>
+            <el-radio label="MALE">Male</el-radio>
+            <el-radio label="FEMALE">Female</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="头像">
+        <el-form-item label="Avatar">
           <AvatarUpload :img-src="form.avatar" @on-select="onAvatarSelect"/>
         </el-form-item>
       </el-form>
       <template #footer>
-				<span class="dialog-footer">
-					<el-button @click="editVisible = false">取 消</el-button>
-					<el-button type="primary" @click="saveEdit">确 定</el-button>
-				</span>
+        <span class="dialog-footer">
+          <el-button @click="editVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="saveEdit">OK</el-button>
+        </span>
       </template>
     </el-dialog>
   </div>
@@ -291,7 +291,7 @@ enum OrgTypeEum {
   JOB = 'JOB',
 }
 
-const rootNode = {name: '根节点', id: 1, type: OrgTypeEum.DEPART, children: []};
+const rootNode = {name: 'Root Node', id: 1, type: OrgTypeEum.DEPART, children: []};
 
 const treeData = ref<OrgTreeNode[]>([rootNode]);
 const defaultExpandedKeys = ref<number[]>([1]);
@@ -327,7 +327,7 @@ class Org {
 
 let orgForm = reactive(new Org());
 
-//表格新增时
+// When adding to table
 const addOrgDialogVisible = ref(false);
 
 const updateOrgDialogVisible = ref(false);
@@ -355,7 +355,7 @@ const saveAddOrgNode = async () => {
 }
 
 /**
- * @desc 转换数组对象的键值对 el-tree => el-tree-select
+ * @desc Convert array object key-value pairs el-tree => el-tree-select
  */
 const convertOrgTree = (orgTreeNode: Partial<(OrgTreeNode & { value: number, label: string })>[]) => {
   if (!orgTreeNode.length) {
@@ -379,12 +379,12 @@ const saveUpdateOrgNode = async () => {
 }
 
 const saveDeleteOrgNode = async (data: OrgTreeNode) => {
-  // 二次确认删除
-  ElMessageBox.confirm('确定要删除吗？', '提示', {
+  // Confirm delete
+  ElMessageBox.confirm('Are you sure you want to delete?', 'Warning', {
     type: 'warning'
   }).then(() => {
     deleteOrganization(data.id).then(res => {
-      ElMessage.success('删除成功');
+      ElMessage.success('Deleted successfully');
       reqAllNodes();
     });
   }).catch(() => {
@@ -413,7 +413,7 @@ const query = reactive({
 });
 const tableData = ref<TableItem[]>([]);
 const pageTotal = ref(0);
-// 获取表格数据
+// Get table data
 const getUserData = () => {
   getOrganizationUserList(selectedNode.value.id, {
     page: query.pageIndex,
@@ -429,36 +429,36 @@ const getUserData = () => {
 };
 getUserData();
 
-// 查询操作
+// Search operation
 const handleSearch = () => {
   query.pageIndex = 1;
   getUserData();
 };
-// 分页导航
+// Pagination
 const handlePageChange = (val: number) => {
   query.pageIndex = val;
   getUserData();
 };
 
-// 删除操作
+// Delete operation
 const handleDelete = (row: any) => {
-  // 二次确认删除
-  ElMessageBox.confirm('确定要删除吗？', '提示', {
+  // Confirm delete
+  ElMessageBox.confirm('Are you sure you want to delete?', 'Warning', {
     type: 'warning'
   }).then(() => {
     deleteUser(row.id).then(res => {
       getUserData();
     });
-    ElMessage.success('删除成功');
+    ElMessage.success('Deleted successfully');
   })
     .catch(() => {
     });
 };
 
-//表格新增时
+// When adding to table
 const addVisible = ref(false);
 
-// 表格编辑时弹窗和保存
+// Edit popup and save
 const editVisible = ref(false);
 
 class User {
@@ -475,7 +475,7 @@ const saveAdd = () => {
   form.organizationId = selectedNode.value.id;
   createUser(form).then(res => {
     getUserData();
-    ElMessage.success(`新增成功`);
+    ElMessage.success(`Added successfully`);
     addVisible.value = false;
   });
 };
@@ -492,19 +492,19 @@ const saveEdit = () => {
   console.log(form);
   updateUser(id, form).then(res => {
     getUserData();
-    ElMessage.success(`修改成功`);
+    ElMessage.success(`Updated successfully`);
   });
 };
 const handleDisable = (row: any) => {
   disableUser(row.id).then(res => {
     getUserData();
-    ElMessage.success(`禁用成功`);
+    ElMessage.success(`Disabled successfully`);
   });
 }
 const handleEnable = (row: any) => {
   enableUser(row.id).then(res => {
     getUserData();
-    ElMessage.success(`启用成功`);
+    ElMessage.success(`Enabled successfully`);
   });
 }
 const onAvatarSelect = (imgUrl: string) => {

@@ -73,24 +73,24 @@ Vue.js wrapper for sChart.js. Github : [vue-schart](https://github.com/lin-xin/v
 </template>
 <script setup>
 import { ref } from 'vue';
-import Schart from "vue-schart"; // 导入Schart组件
+import Schart from "vue-schart"; // Import Schart component
 const options = ref({
     type: "bar",
     title: {
-        text: "最近一周各品类销售图",
+        text: "Sales by category in the last week",
     },
-    labels: ["周一", "周二", "周三", "周四", "周五"],
+    labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
     datasets: [
         {
-            label: "家电",
+            label: "Home Appliances",
             data: [234, 278, 270, 190, 230],
         },
         {
-            label: "百货",
+            label: "Department Store",
             data: [164, 178, 190, 135, 160],
         },
         {
-            label: "食品",
+            label: "Food",
             data: [144, 198, 150, 235, 120],
         },
     ],

@@ -1,6 +1,9 @@
 package tech.wetech.admin3.controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,10 +17,6 @@ import tech.wetech.admin3.sys.model.StorageConfig.Type;
 import tech.wetech.admin3.sys.model.StorageFile;
 import tech.wetech.admin3.sys.service.StorageService;
 import tech.wetech.admin3.sys.service.dto.StorageFileDTO;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author cjbi
@@ -42,34 +41,36 @@ public class StorageController {
 
   @PostMapping("/configs")
   @RequiresPermissions("storage:create")
-  public ResponseEntity<StorageConfig> createStorageConfig(@RequestBody StorageConfigRequest request) {
-    StorageConfig config = storageService.createConfig(
-      request.name(),
-      request.type(),
-      request.endpoint(),
-      request.accessKey(),
-      request.secretKey(),
-      request.bucketName(),
-      request.address(),
-      request.storagePath()
-    );
+  public ResponseEntity<StorageConfig> createStorageConfig(
+      @RequestBody StorageConfigRequest request) {
+    StorageConfig config =
+        storageService.createConfig(
+            request.name(),
+            request.type(),
+            request.endpoint(),
+            request.accessKey(),
+            request.secretKey(),
+            request.bucketName(),
+            request.address(),
+            request.storagePath());
     return new ResponseEntity<>(config, HttpStatus.CREATED);
   }
 
   @PutMapping("/configs/{id}")
   @RequiresPermissions("storage:update")
-  public ResponseEntity<StorageConfig> updateStorageConfig(@PathVariable("id") Long id, @RequestBody StorageConfigRequest request) {
-    StorageConfig config = storageService.updateConfig(
-      id,
-      request.name(),
-      request.type(),
-      request.endpoint(),
-      request.accessKey(),
-      request.secretKey(),
-      request.bucketName(),
-      request.address(),
-      request.storagePath()
-    );
+  public ResponseEntity<StorageConfig> updateStorageConfig(
+      @PathVariable("id") Long id, @RequestBody StorageConfigRequest request) {
+    StorageConfig config =
+        storageService.updateConfig(
+            id,
+            request.name(),
+            request.type(),
+            request.endpoint(),
+            request.accessKey(),
+            request.secretKey(),
+            request.bucketName(),
+            request.address(),
+            request.storagePath());
     return ResponseEntity.ok(config);
   }
 
@@ -90,12 +91,20 @@ public class StorageController {
   }
 
   @PostMapping("/upload")
-  public ResponseEntity<List<StorageFileDTO>> upload(@RequestParam(value = "storageId", required = false) String storageId,
-                                                     @RequestParam("files") MultipartFile[] files) throws IOException {
+  public ResponseEntity<List<StorageFileDTO>> upload(
+      @RequestParam(value = "storageId", required = false) String storageId,
+      @RequestParam("files") MultipartFile[] files)
+      throws IOException {
     List<StorageFileDTO> responses = new ArrayList<>();
     for (MultipartFile file : files) {
       String originalFilename = file.getOriginalFilename();
-      StorageFileDTO storageFile = storageService.store(storageId, file.getInputStream(), file.getSize(), file.getContentType(), originalFilename);
+      StorageFileDTO storageFile =
+          storageService.store(
+              storageId,
+              file.getInputStream(),
+              file.getSize(),
+              file.getContentType(),
+              originalFilename);
       responses.add(storageFile);
     }
     return ResponseEntity.ok(responses);
@@ -140,12 +149,13 @@ public class StorageController {
     if (file == null) {
       return ResponseEntity.notFound().build();
     }
-    return ResponseEntity.ok().contentType(mediaType)
-      .header(HttpHeaders.CONTENT_DISPOSITION,
-        "attachment; filename=\"" + storageFile.getName() + "\"")
-      .body(file);
+    return ResponseEntity.ok()
+        .contentType(mediaType)
+        .header(
+            HttpHeaders.CONTENT_DISPOSITION,
+            "attachment; filename=\"" + storageFile.getName() + "\"")
+        .body(file);
   }
-
 
   @DeleteMapping("/files/{key:.+}")
   public ResponseEntity<Void> delete(@PathVariable String key) {
@@ -153,16 +163,13 @@ public class StorageController {
     return ResponseEntity.noContent().build();
   }
 
-  record StorageConfigRequest(String name,
-                              Type type,
-                              String endpoint,
-                              String accessKey,
-                              String secretKey,
-                              String bucketName,
-                              String address,
-                              String storagePath
-  ) {
-
-  }
-
+  record StorageConfigRequest(
+      String name,
+      Type type,
+      String endpoint,
+      String accessKey,
+      String secretKey,
+      String bucketName,
+      String address,
+      String storagePath) {}
 }

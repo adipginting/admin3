@@ -1,14 +1,12 @@
 package tech.wetech.admin3;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author cjbi
  */
-
 @ConfigurationProperties("admin3")
 public class Admin3Properties {
 
@@ -42,5 +40,4 @@ public class Admin3Properties {
       this.logTemplate = logTemplate;
     }
   }
-
 }

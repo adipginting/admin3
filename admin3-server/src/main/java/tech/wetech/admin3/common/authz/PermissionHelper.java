@@ -1,18 +1,16 @@
 package tech.wetech.admin3.common.authz;
 
-import tech.wetech.admin3.common.CollectionUtils;
-import tech.wetech.admin3.common.StringUtils;
-
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import tech.wetech.admin3.common.CollectionUtils;
+import tech.wetech.admin3.common.StringUtils;
 
 /**
  * @author cjbi
  */
 public class PermissionHelper {
-
 
   public static boolean isPermitted(Set<String> permissions, String[] value, Logical logical) {
     if (logical == Logical.AND) {
@@ -38,7 +36,7 @@ public class PermissionHelper {
   }
 
   /**
-   * 判断是否有对应权限
+   * Check if the corresponding permission exists
    *
    * @param permissions
    * @param permission
@@ -67,8 +65,7 @@ public class PermissionHelper {
 
     private List<Set<String>> parts;
 
-    protected Permission() {
-    }
+    protected Permission() {}
 
     public Permission(String wildcardString) {
       this(wildcardString, DEFAULT_CASE_SENSITIVE);
@@ -84,7 +81,8 @@ public class PermissionHelper {
 
     protected void setParts(String wildcardString, boolean caseSensitive) {
       if (wildcardString == null || wildcardString.trim().length() == 0) {
-        throw new IllegalArgumentException("Wildcard string cannot be null or empty. Make sure permission strings are properly formatted.");
+        throw new IllegalArgumentException(
+            "Wildcard string cannot be null or empty. Make sure permission strings are properly formatted.");
       }
 
       wildcardString = wildcardString.trim();
@@ -98,13 +96,15 @@ public class PermissionHelper {
           subparts = lowercase(subparts);
         }
         if (subparts.isEmpty()) {
-          throw new IllegalArgumentException("Wildcard string cannot contain parts with only dividers. Make sure permission strings are properly formatted.");
+          throw new IllegalArgumentException(
+              "Wildcard string cannot contain parts with only dividers. Make sure permission strings are properly formatted.");
         }
         this.parts.add(subparts);
       }
 
       if (this.parts.isEmpty()) {
-        throw new IllegalArgumentException("Wildcard string cannot contain only dividers. Make sure permission strings are properly formatted.");
+        throw new IllegalArgumentException(
+            "Wildcard string cannot contain only dividers. Make sure permission strings are properly formatted.");
       }
     }
 
@@ -120,7 +120,6 @@ public class PermissionHelper {
       return this.parts;
     }
 
-
     public boolean implies(Permission p) {
       // By default only supports comparisons with other WildcardPermissions
       if (!(p instanceof Permission)) {
@@ -132,7 +131,8 @@ public class PermissionHelper {
 
       int i = 0;
       for (Set<String> otherPart : otherParts) {
-        // If this permission has less parts than the other permission, everything after the number of parts contained
+        // If this permission has less parts than the other permission, everything after the number
+        // of parts contained
         // in this permission is automatically implied, so return true
         if (getParts().size() - 1 < i) {
           return true;
@@ -144,7 +144,8 @@ public class PermissionHelper {
           i++;
         }
       }
-      // If this permission has more parts than the other parts, only imply it if all of the other parts are wildcards
+      // If this permission has more parts than the other parts, only imply it if all of the other
+      // parts are wildcards
       for (; i < getParts().size(); i++) {
         Set<String> part = getParts().get(i);
         if (!part.contains(WILDCARD_TOKEN)) {
@@ -154,5 +155,4 @@ public class PermissionHelper {
       return true;
     }
   }
-
 }

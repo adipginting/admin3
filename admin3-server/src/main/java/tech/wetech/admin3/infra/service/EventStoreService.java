@@ -16,7 +16,8 @@ public class EventStoreService implements EventStore {
   private final StoredEventRepository storedEventRepository;
   private final UserRepository userRepository;
 
-  public EventStoreService(StoredEventRepository storedEventRepository, UserRepository userRepository) {
+  public EventStoreService(
+      StoredEventRepository storedEventRepository, UserRepository userRepository) {
     this.storedEventRepository = storedEventRepository;
     this.userRepository = userRepository;
   }
@@ -33,5 +34,4 @@ public class EventStoreService implements EventStore {
     }
     storedEventRepository.save(storedEvent);
   }
-
 }

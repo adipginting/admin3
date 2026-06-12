@@ -7,7 +7,5 @@ import org.springframework.boot.test.context.SpringBootTest;
 class Admin3ServerApplicationTests extends AbstractIntegrationTest {
 
   @Test
-  void contextLoads() {
-  }
-
+  void contextLoads() {}
 }

@@ -1,8 +1,7 @@
 package tech.wetech.admin3.sys.service.dto;
 
-import tech.wetech.admin3.sys.model.Organization;
-
 import java.util.List;
+import tech.wetech.admin3.sys.model.Organization;
 
 /**
  * @author cjbi
@@ -39,5 +38,4 @@ public class OrgTreeDTO {
   public boolean getIsLeaf() {
     return getChildren().isEmpty();
   }
-
 }

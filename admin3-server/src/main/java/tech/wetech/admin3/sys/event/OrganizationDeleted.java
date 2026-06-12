@@ -6,5 +6,4 @@ import tech.wetech.admin3.sys.model.Organization;
 /**
  * @author cjbi
  */
-public record OrganizationDeleted(Organization organization) implements DomainEvent {
-}
+public record OrganizationDeleted(Organization organization) implements DomainEvent {}

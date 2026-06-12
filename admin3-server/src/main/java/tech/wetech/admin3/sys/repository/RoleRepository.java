@@ -16,5 +16,4 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
 
   @Query("select distinct u FROM User u join u.roles r where r.id=:roleId")
   Page<User> findRoleUsers(Long roleId, Pageable pageable);
-
 }

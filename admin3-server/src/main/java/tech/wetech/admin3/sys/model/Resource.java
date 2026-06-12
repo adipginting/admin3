@@ -1,12 +1,11 @@
 package tech.wetech.admin3.sys.model;
 
 import jakarta.persistence.*;
-
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * 资源
+ * Resource
  *
  * @author cjbi
  */
@@ -25,19 +24,21 @@ public class Resource extends BaseEntity {
   @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
   private Set<Resource> children = new LinkedHashSet<>();
 
-  private String parentIds; //父编号列表
+  private String parentIds; // Parent ID list
 
   private String icon;
   private String url;
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-  @JoinTable(name = "role_resource",
-    joinColumns = @JoinColumn(name = "resource_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+  @JoinTable(
+      name = "role_resource",
+      joinColumns = @JoinColumn(name = "resource_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
   private Set<Role> roles = new LinkedHashSet<>();
 
   public enum Type {
-    MENU, BUTTON
+    MENU,
+    BUTTON
   }
 
   public String getIcon() {

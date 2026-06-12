@@ -1,5 +1,11 @@
 package tech.wetech.admin3.sys.service;
 
+import static tech.wetech.admin3.common.Constants.RESOURCE_ROOT_ID;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,13 +21,6 @@ import tech.wetech.admin3.sys.model.Resource.Type;
 import tech.wetech.admin3.sys.repository.ResourceRepository;
 import tech.wetech.admin3.sys.service.dto.MenuResourceDTO;
 import tech.wetech.admin3.sys.service.dto.ResourceTreeDTO;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static tech.wetech.admin3.common.Constants.RESOURCE_ROOT_ID;
 
 /**
  * @author cjbi
@@ -40,8 +39,9 @@ public class ResourceService {
   }
 
   public Resource findResourceById(Long resourceId) {
-    return resourceRepository.findById(resourceId)
-      .orElseThrow(() -> new BusinessException(CommonResultStatus.RECORD_NOT_EXIST));
+    return resourceRepository
+        .findById(resourceId)
+        .orElseThrow(() -> new BusinessException(CommonResultStatus.RECORD_NOT_EXIST));
   }
 
   public List<MenuResourceDTO> findMenus(Set<String> permissions) {
@@ -53,11 +53,16 @@ public class ResourceService {
       if (!PermissionHelper.hasPermission(permissions, menu.getPermission())) {
         continue;
       }
-      list.add(new MenuResourceDTO(menu.getId(), menu.getName(), menu.getUrl(), menu.getIcon(), menu.getParent().getId()));
+      list.add(
+          new MenuResourceDTO(
+              menu.getId(),
+              menu.getName(),
+              menu.getUrl(),
+              menu.getIcon(),
+              menu.getParent().getId()));
     }
     return list;
   }
-
 
   public List<ResourceTreeDTO> findResourceTree() {
     List<Resource> allResources = resourceRepository.findAll();
@@ -66,13 +71,25 @@ public class ResourceService {
 
   private List<ResourceTreeDTO> getResourceTree(List<Resource> resources, Long parentId) {
     return resources.stream()
-      .filter(r -> r.getParent() != null && r.getParent().getId().equals(parentId))
-      .map(r -> new ResourceTreeDTO(r.getId(), r.getName(), r.getType(), r.getPermission(), r.getUrl(), r.getIcon(), getResourceTree(resources, r.getId()), r.getParent().getId(), r.getParent().getName()))
-      .collect(Collectors.toList());
+        .filter(r -> r.getParent() != null && r.getParent().getId().equals(parentId))
+        .map(
+            r ->
+                new ResourceTreeDTO(
+                    r.getId(),
+                    r.getName(),
+                    r.getType(),
+                    r.getPermission(),
+                    r.getUrl(),
+                    r.getIcon(),
+                    getResourceTree(resources, r.getId()),
+                    r.getParent().getId(),
+                    r.getParent().getName()))
+        .collect(Collectors.toList());
   }
 
   @Transactional
-  public Resource createResource(String name, Type type, String url, String icon, String permission, Long parentId) {
+  public Resource createResource(
+      String name, Type type, String url, String icon, String permission, Long parentId) {
     Resource resource = new Resource();
     resource.setName(name);
     resource.setType(type);
@@ -86,7 +103,14 @@ public class ResourceService {
   }
 
   @Transactional
-  public Resource updateResource(Long resourceId, String name, Type type, String url, String icon, String permission, Long parentId) {
+  public Resource updateResource(
+      Long resourceId,
+      String name,
+      Type type,
+      String url,
+      String icon,
+      String permission,
+      Long parentId) {
     Resource resource = findResourceById(resourceId);
     resource.setName(name);
     resource.setType(type);
@@ -105,6 +129,4 @@ public class ResourceService {
     resourceRepository.delete(resource);
     DomainEventPublisher.instance().publish(new ResourceDeleted(resource));
   }
-
-
 }

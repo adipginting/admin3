@@ -1,31 +1,29 @@
 package tech.wetech.admin3.sys.model;
 
-
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
-
 import java.util.Objects;
 
 /**
- * Base class for an entity, as explained in the book "Domain Driven Design".
- * All entities in this project have an identity attribute with type Long and
- * name id. Inspired by the DDD Sample project.
+ * Base class for an entity, as explained in the book "Domain Driven Design". All entities in this
+ * project have an identity attribute with type Long and name id. Inspired by the DDD Sample
+ * project.
  *
  * @author Christoph Knabe
  * @author cjbi
  * @see <a href=
- * "https://github.com/citerus/dddsample-core/blob/master/src/main/java/se/citerus/dddsample/domain/shared/Entity.java">Entity
- * in the DDD Sample</a>
+ *     "https://github.com/citerus/dddsample-core/blob/master/src/main/java/se/citerus/dddsample/domain/shared/Entity.java">Entity
+ *     in the DDD Sample</a>
  * @since 2017-03-06
  */
 @MappedSuperclass
 public abstract class BaseEntity {
 
   /**
-   * This identity field has the wrapper class type Long so that an entity which
-   * has not been saved is recognizable by a null identity.
+   * This identity field has the wrapper class type Long so that an entity which has not been saved
+   * is recognizable by a null identity.
    */
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,12 +57,10 @@ public abstract class BaseEntity {
   }
 
   /**
-   * Checks the passed entity, if it has an identity. It gets an identity only by
-   * saving.
+   * Checks the passed entity, if it has an identity. It gets an identity only by saving.
    *
    * @param entity the entity to be checked
-   * @throws IllegalStateException the passed entity does not have the identity
-   *                               attribute set.
+   * @throws IllegalStateException the passed entity does not have the identity attribute set.
    */
   private void _checkIdentity(final BaseEntity entity) {
     if (entity.getId() == null) {
@@ -81,5 +77,4 @@ public abstract class BaseEntity {
   public String toString() {
     return this.getClass().getSimpleName() + "<" + getId() + ">";
   }
-
 }

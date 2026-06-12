@@ -1,73 +1,70 @@
-# API参考
+# API Reference
 
-Admin3 HTTP API 基于 Resource & Action 设计，是 REST API 的超集，Action不局限于增删改查。
+Admin3 HTTP API is based on Resource & Action design, which is a superset of REST API. Action is not limited to CRUD operations.
 
-## URI规范
+## URI Specification
 
-URI 结构 https://[host]:[port]/{service name}]/v{version number}/{resource}
+URI structure https://[host]:[port]/{service name}]/v{version number}/{resource}
 
-**要求**
+**Requirements**
 
-* 不使用大写
+* Do not use uppercase
 
-* 用中杠-不用下杠_
+* Use hyphens - instead of underscores _
 
-* 参数列表要encode
+* Parameter lists must be encoded
 
-* URI中的名词表示资源集合，使用复数形式
+* Nouns in the URI represent resource collections and use plural forms
 
-## 资源
+## Resources
 
-REST API 是可单独寻址的“资源”（API 中的“名词”）的“集合”。资源通过资源名称被引用，并通过一组“方法”（也称为“动词”或“操作”）进行控制。
+REST API is a "collection" of individually addressable "resources" (the "nouns" in the API). Resources are referenced by resource names and controlled by a set of "methods" (also called "verbs" or "operations").
 
-API 的标准方法（也称为“REST 方法”）包括 List、Get、Create、Update 和 Delete。API
-设计者还可以使用“自定义方法”（也称为“自定义动词”或“自定义操作”）来实现无法轻易映射到标准方法的功能。
+API standard methods (also called "REST methods") include List, Get, Create, Update, and Delete. API designers can also use "custom methods" (also called "custom verbs" or "custom operations") to implement functionality that cannot be easily mapped to standard methods.
 
-## 方法
+## Methods
 
-面向资源的 API 的关键特性是，强调资源（数据模型）甚于资源上执行的方法（功能）。典型的面向资源的 API
-使用少量方法公开大量资源。方法可以是标准方法或自定义方法。对于本指南，标准方法有：List、Get、Create、Update和 Delete。
+A key feature of resource-oriented APIs is the emphasis on resources (data model) over the methods performed on resources (functionality). Typical resource-oriented APIs expose a large number of resources using a small number of methods. Methods can be standard methods or custom methods. For this guide, the standard methods are: List, Get, Create, Update, and Delete.
 
-如果 API 功能能够自然映射到标准方法，则应该在 API 设计中使用该方法。对于不会自然映射到某一标准方法的功能，可以使用自定义方法。
+If an API function can naturally map to a standard method, that method should be used in the API design. For functionality that does not naturally map to a standard method, custom methods can be used.
 
-### 标准方法
+### Standard Methods
 
-| 标准方法   | HTTP映射                                        | HTTP请求正文 | hTTP响应正文 |
+| Standard Method   | HTTP Mapping                                        | HTTP Request Body | HTTP Response Body |
 |--------|-----------------------------------------------|----------|----------|
-| List   | `GET <collection URL>`                         | 无        | 资源*列表    |
-| Get    | `GET <collection URL>/<collection_id>`          | 无        | 资源*      |
-| Create | `POST <collection URL>`                         | 资源       | 资源*      |
-| Update | `PUT or PATCH <resource URL>/<collection_id>` | 资源       | 资源*      |
-| Delete | `DELETE <resource URL>/<collection_id>`         | 不适用      |          |
+| List   | `GET <collection URL>`                         | None        | Resource* list    |
+| Get    | `GET <collection URL>/<collection_id>`          | None        | Resource*      |
+| Create | `POST <collection URL>`                         | Resource       | Resource*      |
+| Update | `PUT or PATCH <resource URL>/<collection_id>` | Resource       | Resource*      |
+| Delete | `DELETE <resource URL>/<collection_id>`         | N/A      |          |
 
-### 自定义方法
+### Custom Methods
 
-自定义方法是指 5 个标准方法之外的 API 方法。这些方法应该仅用于标准方法不易表达的功能。通常情况下，API
-设计者应该尽可能优先考虑使用标准方法，而不是自定义方法。标准方法具有大多数开发者熟悉的更简单且定义明确的语义，因此更易于使用且不易出错
+Custom methods refer to API methods other than the 5 standard methods. These methods should only be used for functionality that is not easily expressed by standard methods. Typically, API designers should prioritize using standard methods over custom methods. Standard methods have simpler and more clearly defined semantics that most developers are familiar with, making them easier to use and less error-prone.
 
-对于自定义方法，应该使用以下通用HTTP映射：
+For custom methods, the following general HTTP mapping should be used:
 
 ```
 https://service.name/v1/some/resource/name:customVerb
 ```
 
-以下为自定义方法示例
+The following are examples of custom methods:
 
-| 方法名称     | 自定义动词     | HTTP动词 | 备注                            |
+| Method Name     | Custom Verb     | HTTP Verb | Remarks                            |
 |----------|-----------|--------|-------------------------------|
-| Cancel   | :cancel   | POST   | 取消一个未完成的操作                    |
-| BatchGET | :batchGet | GET    | 批量获取多个资源                      |
-| Move     | :move     | POST   | 将资源从一个父级移动到另一个父级              |
-| Search   | :search   | GET    | List 的替代方法，用于获取不符合 List 语义的数据 |
-| Undelete | :undelete | POST   | 恢复之前删除的资源 |
+| Cancel   | :cancel   | POST   | Cancel an unfinished operation                    |
+| BatchGET | :batchGet | GET    | Batch get multiple resources                      |
+| Move     | :move     | POST   | Move a resource from one parent to another              |
+| Search   | :search   | GET    | Alternative to List, used for data that does not fit List semantics |
+| Undelete | :undelete | POST   | Restore a previously deleted resource |
 
-注意：上面的情况指的是API名称；HTTP/JSON URI 后缀使用 :lowerCamelCase。
+Note: The above cases refer to API names; HTTP/JSON URI suffixes use :lowerCamelCase.
 
-## 请求
+## Requests
 
-### 身份认证
+### Authentication
 
-**请求登录接口获得Token**
+**Request login interface to obtain Token**
 
 ```
 curl -X 'POST' \
@@ -80,9 +77,9 @@ curl -X 'POST' \
 }'
 ```
 
-**在请求头加入Token**
+**Add Token to request header**
 
-Token规则 Authorization: Bearer + {Token}
+Token rule: Authorization: Bearer + {Token}
 
 ```
 curl -X 'GET' \
@@ -91,64 +88,64 @@ curl -X 'GET' \
   -H 'Authorization: Bearer c023825e63104d079766b66b7e950da9'
 ```
 
-### 请求参数
+### Request Parameters
 
-请求的参数可以放在 Request 的 headers、parameters（query string）、body（GET 请求没有 body） 里
+Request parameters can be placed in the Request's headers, parameters (query string), or body (GET requests have no body).
 
-几个特殊的 Parameters 请求参数
+A few special Parameters request parameters:
 
-* `page`  要检索的分页，默认值为1
-* `size`  要检索的页数，默认值为20
-* `sort`  对结果进行排序的一个或多个属性，使用以下格式：property1，property2 (,asc|desc) –例如，?sort=name&sort=email,asc
+* `page`  The page to retrieve, default is 1
+* `size`  The number of items per page, default is 20
+* `sort`  One or more properties to sort the result by, using the following format: property1, property2 (,asc|desc) – for example, ?sort=name&sort=email,asc
 
-## 响应
+## Response
 
-### HTTP状态码
+### HTTP Status Codes
 
-| 状态码 | 说明                                    |
+| Status Code | Description                                    |
 |-----|---------------------------------------|
-| 200 | Ok, 服务器成功返回的数据                        |
-| 201 | Created, 用户新建或修改数据成功                  |
-| 400 | Bad Request, 用户发出的请求有错误，例如参数校验失败等     |
-| 401 | Unauthorized, 用户未取得授权 （未登录、密码错误、账户停用） |
-| 403 | Forbidden, 用户被禁止访问资源                  |
-| 404 | Not Found, 请求的记录不存在                   |
-| 500 | Internal Server Error, 系统级别错误，不可恢复的异常 |
+| 200 | Ok, data successfully returned by the server                        |
+| 201 | Created, user created or modified data successfully                  |
+| 400 | Bad Request, user request has errors, such as parameter validation failure, etc.     |
+| 401 | Unauthorized, user not authorized (not logged in, wrong password, account disabled) |
+| 403 | Forbidden, user is prohibited from accessing the resource                  |
+| 404 | Not Found, requested record does not exist                   |
+| 500 | Internal Server Error, system-level error, unrecoverable exception |
 
-### 响应体
+### Response Body
 
-正常响应的 body 直接就是数据，不要做多余的包装。只有当出错时，才需要进行包装，错误示例：
+The body of a normal response should directly be the data, without unnecessary wrapping. Only when an error occurs should it be wrapped. Error example:
 
 ```json
 {
   "code": 1002,
-  "message": "参数非法",
+  "message": "Invalid parameter",
   "data": {},
-  "errors": [{"username":"不能为空"}]
+  "errors": [{"username":"Cannot be empty"}]
 }
 ```
 
-**说明**
+**Description**
 
-| 属性      | 类型     | 是否必须 | 说明   |
+| Property      | Type     | Required | Description   |
 |---------|--------|------|------|
-| code    | number | 是    | 业务状态码 |
-| message | string | 是    | 业务消息 |
-| data    | any    | 否    | 异常数据 |
-| errors  | array  | 否    | 错误列表 |
+| code    | number | Yes    | Business status code |
+| message | string | Yes    | Business message |
+| data    | any    | No    | Exception data |
+| errors  | array  | No    | Error list |
 
- **业务状态码**
+ **Business Status Codes**
 
-| 状态码  | 说明      |
+| Status Code  | Description      |
 |------|---------|
-| 1001 | 失败      |
-| 1002 | 参数非法    |
-| 1003 | 记录不存在   |
-| 1004 | 未授权     |
-| 1005 | 禁止访问    |
-| -1   | 服务器内部错误 |
+| 1001 | Failed      |
+| 1002 | Invalid parameter    |
+| 1003 | Record does not exist   |
+| 1004 | Unauthorized     |
+| 1005 | Forbidden    |
+| -1   | Internal server error |
 
-对于分页接口,可能要返回总条数, 结构如下：
+For paginated interfaces, the total count may need to be returned, with the following structure:
 ```json lines
 {
   "list": [
@@ -163,22 +160,22 @@ curl -X 'GET' \
 }
 ```
 
-## 示例
+## Examples
 
-以角色、用户为例：
+Taking roles and users as examples:
 
-* 获取单个角色 `GET /roles/{roleId}`
+* Get a single role `GET /roles/{roleId}`
 
-* 获取角色列表 `GET /roles`
+* Get role list `GET /roles`
 
-* 新增角色 `POST /roles`
+* Add role `POST /roles`
 
-* 更新角色 `PUT /roles/{roleId}`
+* Update role `PUT /roles/{roleId}`
 
-* 删除角色 `DELETE /roles/{roleId}`
+* Delete role `DELETE /roles/{roleId}`
 
-* 获取角色下的所有用户 `GET /roles/{roleId}/users`
+* Get all users under a role `GET /roles/{roleId}/users`
 
-* 禁用用户 POST `/users/{userId}:disable`
+* Disable user POST `/users/{userId}:disable`
 
-* 启用用户 POST `/users/{userId}:enable`
+* Enable user POST `/users/{userId}:enable`

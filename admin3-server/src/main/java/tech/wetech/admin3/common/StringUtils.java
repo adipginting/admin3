@@ -27,7 +27,7 @@ public class StringUtils {
     int strLen;
     if (str != null && (strLen = str.length()) != 0) {
       for (int i = 0; i < strLen; ++i) {
-        // 判断字符是否为空格、制表符、tab
+        // Check if character is whitespace, tab, etc.
         if (!Character.isWhitespace(str.charAt(i))) {
           return false;
         }
@@ -39,11 +39,12 @@ public class StringUtils {
   }
 
   /**
-   * 实现简单版本 mustache 风格的模板渲染，支持<b>{{key}}<b/>格式的模板内容
+   * Implement a simple mustache-style template rendering, supporting <b>{{key}}<b/> format template
+   * content
    *
-   * @param template   模板
-   * @param attributes 属性
-   * @return 渲染结果
+   * @param template Template
+   * @param attributes Attributes
+   * @return Rendered result
    */
   public static String simpleRenderTemplate(String template, Map<?, ?> attributes) {
     if (isBlank(template)) {
@@ -65,7 +66,8 @@ public class StringUtils {
     return template;
   }
 
-  private static String simpleRenderTemplate(String template, int length, int i, Map<?, ?> attributes) {
+  private static String simpleRenderTemplate(
+      String template, int length, int i, Map<?, ?> attributes) {
     StringBuilder valueBuilder = new StringBuilder();
     int endIndex = i - 2;
     label:
@@ -94,5 +96,4 @@ public class StringUtils {
     }
     return template.substring(0, endIndex) + value + template.substring(++i);
   }
-
 }

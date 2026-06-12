@@ -11,5 +11,4 @@ public class Admin3ServerApplication {
   public static void main(String[] args) {
     SpringApplication.run(Admin3ServerApplication.class, args);
   }
-
 }

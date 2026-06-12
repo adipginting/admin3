@@ -6,5 +6,4 @@ import tech.wetech.admin3.sys.model.User;
 /**
  * @author cjbi
  */
-public record UserDeleted(User user) implements DomainEvent {
-}
+public record UserDeleted(User user) implements DomainEvent {}

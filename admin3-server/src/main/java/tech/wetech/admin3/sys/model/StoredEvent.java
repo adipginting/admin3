@@ -1,11 +1,9 @@
 package tech.wetech.admin3.sys.model;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
-
 import java.time.LocalDateTime;
 
 /**
@@ -17,10 +15,10 @@ public class StoredEvent extends BaseEntity {
   @Lob
   @Column(length = Integer.MAX_VALUE)
   private String eventBody;
+
   private LocalDateTime occurredOn;
   private String typeName;
-  @ManyToOne
-  private User user;
+  @ManyToOne private User user;
 
   public String getEventBody() {
     return eventBody;
@@ -53,5 +51,4 @@ public class StoredEvent extends BaseEntity {
   public void setUser(User user) {
     this.user = user;
   }
-
 }

@@ -5,6 +5,4 @@ import java.util.List;
 /**
  * @author cjbi
  */
-public record PageDTO<T>(List<T> list, long total) {
-
-}
+public record PageDTO<T>(List<T> list, long total) {}

@@ -1,13 +1,12 @@
 package tech.wetech.admin3.sys.model;
 
 import jakarta.persistence.*;
-import tech.wetech.admin3.common.JsonUtils;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import tech.wetech.admin3.common.JsonUtils;
 
 /**
- * 会话
+ * Session
  *
  * @author cjbi
  */
@@ -16,10 +15,12 @@ public class Session extends BaseEntity {
 
   @Column(nullable = false)
   private String token;
-  @ManyToOne
-  private UserCredential credential;
+
+  @ManyToOne private UserCredential credential;
+
   @Column(nullable = false)
   private LocalDateTime expireTime;
+
   @Column(nullable = false)
   private LocalDateTime lastLoginTime;
 
@@ -29,11 +30,14 @@ public class Session extends BaseEntity {
   @Column(length = Integer.MAX_VALUE)
   private String data;
 
-  @Transient
-  private boolean active;
+  @Transient private boolean active;
 
-
-  public static Session of(Long id, String token, UserCredential credential, Serializable data, LocalDateTime expireTime) {
+  public static Session of(
+      Long id,
+      String token,
+      UserCredential credential,
+      Serializable data,
+      LocalDateTime expireTime) {
     Session authSession = new Session();
     authSession.setId(id);
     authSession.setToken(token);

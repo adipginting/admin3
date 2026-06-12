@@ -16,69 +16,69 @@
     <img src="https://img.shields.io/badge/%24-donate-ff69b4.svg" alt="donate">
   </a>
 
-基于 Vue3 + pinia + Element Plus 的后台管理系统解决方案。[线上地址](https://lin-xin.gitee.io/example/work/)
+A backend management system solution based on Vue3 + pinia + Element Plus. [Online Demo](https://lin-xin.gitee.io/example/work/)
 
-> Vue2 版本请看 [tag-V4.2.0](https://github.com/lin-xin/vue-manage-system/tree/V4.2.0)
+> For the Vue2 version, see [tag-V4.2.0](https://github.com/lin-xin/vue-manage-system/tree/V4.2.0)
 
 [English document](https://github.com/lin-xin/manage-system/blob/master/README_EN.md)
 
-## 赞助商
+## Sponsors
 
-### 好问
+### Haowen
 
 [<img src="https://static.bestqa.net/logo/bestqa_haowen.png" width="220" height="100">](https://www.bestqa.net/home/index.html)
 
-专业问卷服务，一对一客服，按需定制 
+Professional survey services, one-on-one customer service, customized on demand.
 
-## 支持作者
+## Support the Author
 
-请作者喝杯咖啡吧！(微信号：linxin_20)
+Buy the author a coffee! (WeChat ID: linxin_20)
 
-![微信扫一扫](https://lin-xin.gitee.io/images/weixin.jpg)
+![WeChat Scan](https://lin-xin.gitee.io/images/weixin.jpg)
 
-## 前言
+## Preface
 
-该方案作为一套多功能的后台框架模板，适用于绝大部分的后台管理系统开发。基于 Vue3 + pinia + typescript，引用 Element Plus 组件库，方便开发。实现逻辑简单，适合外包项目，快速交付。
+This project is a multi-functional backend framework template, suitable for most backend management system development. Based on Vue3 + pinia + typescript, using the Element Plus component library for easy development. The implementation logic is simple, suitable for outsourcing projects, and fast delivery.
 
-## 功能
+## Features
 
 -   [x] Element Plus
 -   [x] vite 3
 -   [x] pinia
 -   [x] typescript
--   [x] 登录/注销
+-   [x] Login / Logout
 -   [x] Dashboard
--   [x] 表格
--   [x] Tab 选项卡
--   [x] 表单
--   [x] 图表 :bar_chart:
--   [x] 富文本/markdown编辑器
--   [x] 图片拖拽/裁剪上传
--   [x] 权限管理
--   [x] 三级菜单
--   [x] 自定义图标
+-   [x] Table
+-   [x] Tab
+-   [x] Form
+-   [x] Charts :bar_chart:
+-   [x] Rich text / Markdown editor
+-   [x] Image drag / crop upload
+-   [x] Permission management
+-   [x] Three-level menu
+-   [x] Custom icons
 
 
-## 安装步骤
-> 因为使用vite3，node版本需要 14.18+
+## Installation Steps
+> Because vite3 is used, Node version needs to be 14.18+
 
 ```
-git clone https://github.com/lin-xin/vue-manage-system.git      // 把模板下载到本地
-cd vue-manage-system    // 进入模板目录
-npm install         // 安装项目依赖，等待安装完成之后，安装失败可用 cnpm 或 yarn
+git clone https://github.com/lin-xin/vue-manage-system.git      // Download the template to local
+cd vue-manage-system    // Enter the template directory
+npm install         // Install project dependencies, wait for installation to complete. If installation fails, you can use cnpm or yarn
 
-// 运行
+// Run
 npm run dev
 
-// 执行构建命令，生成的dist文件夹放在服务器下即可访问
+// Execute the build command, place the generated dist folder on the server to access
 npm run build
 ```
 
-## 组件使用说明与演示
+## Component Usage Instructions and Demo
 
 ### vue-schart
 
-vue.js 封装 sChart.js 的图表组件。访问地址：[vue-schart](https://github.com/lin-xin/vue-schart#/) 
+Chart component for vue.js wrapper of sChart.js. Visit: [vue-schart](https://github.com/lin-xin/vue-schart#/)
 
 <p><a href="https://www.npmjs.com/package/vue-schart"><img src="https://img.shields.io/npm/dm/vue-schart.svg" alt="Downloads"></a></p>
 
@@ -91,24 +91,24 @@ vue.js 封装 sChart.js 的图表组件。访问地址：[vue-schart](https://gi
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import Schart from "vue-schart"; // 导入Schart组件
+import Schart from "vue-schart"; // Import Schart component
 const options = ref({
     type: "bar",
     title: {
-        text: "最近一周各品类销售图",
+        text: "Sales chart by category in the last week",
     },
-    labels: ["周一", "周二", "周三", "周四", "周五"],
+    labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
     datasets: [
         {
-            label: "家电",
+            label: "Home Appliances",
             data: [234, 278, 270, 190, 230],
         },
         {
-            label: "百货",
+            label: "Department Store",
             data: [164, 178, 190, 135, 160],
         },
         {
-            label: "食品",
+            label: "Food",
             data: [144, 198, 150, 235, 120],
         },
     ],
@@ -122,13 +122,13 @@ const options = ref({
 </style>
 ```
 
-## 项目截图
+## Project Screenshots
 
-### 登录
+### Login
 
 ![Image text](https://github.com/lin-xin/manage-system/raw/master/screenshots/wms3.png)
 
-### 首页
+### Home
 
 ![Image text](https://github.com/lin-xin/manage-system/raw/master/screenshots/wms1.png)
 

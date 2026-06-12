@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +16,6 @@ import tech.wetech.admin3.sys.service.ResourceService;
 import tech.wetech.admin3.sys.service.dto.MenuResourceDTO;
 import tech.wetech.admin3.sys.service.dto.ResourceTreeDTO;
 import tech.wetech.admin3.sys.service.dto.UserinfoDTO;
-
-import java.util.List;
 
 /**
  * @author cjbi
@@ -47,13 +46,30 @@ public class ResourceController {
   @RequiresPermissions("resource:create")
   @PostMapping
   public ResponseEntity<Resource> createResource(@RequestBody @Valid ResourceRequest request) {
-    return new ResponseEntity<>(resourceService.createResource(request.name(), request.type(), request.url(), request.icon(), request.permission(), request.parentId()), HttpStatus.CREATED);
+    return new ResponseEntity<>(
+        resourceService.createResource(
+            request.name(),
+            request.type(),
+            request.url(),
+            request.icon(),
+            request.permission(),
+            request.parentId()),
+        HttpStatus.CREATED);
   }
 
   @RequiresPermissions("resource:update")
   @PutMapping("/{resourceId}")
-  public ResponseEntity<Resource> updateResource(@PathVariable Long resourceId, @RequestBody @Valid ResourceRequest request) {
-    return ResponseEntity.ok(resourceService.updateResource(resourceId, request.name(), request.type(), request.url(), request.icon(), request.permission(), request.parentId()));
+  public ResponseEntity<Resource> updateResource(
+      @PathVariable Long resourceId, @RequestBody @Valid ResourceRequest request) {
+    return ResponseEntity.ok(
+        resourceService.updateResource(
+            resourceId,
+            request.name(),
+            request.type(),
+            request.url(),
+            request.icon(),
+            request.permission(),
+            request.parentId()));
   }
 
   @RequiresPermissions("resource:delete")
@@ -63,14 +79,11 @@ public class ResourceController {
     return ResponseEntity.noContent().build();
   }
 
-
-  record ResourceRequest(@NotBlank String name,
-                         @NotNull Resource.Type type,
-                         String url,
-                         String icon,
-                         @NotBlank String permission,
-                         @NotNull Long parentId) {
-
-  }
-
+  record ResourceRequest(
+      @NotBlank String name,
+      @NotNull Resource.Type type,
+      String url,
+      String icon,
+      @NotBlank String permission,
+      @NotNull Long parentId) {}
 }

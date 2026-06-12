@@ -15,5 +15,4 @@ public class SecurityUtil {
     md.update(password.getBytes());
     return new BigInteger(1, md.digest()).toString(16);
   }
-
 }
