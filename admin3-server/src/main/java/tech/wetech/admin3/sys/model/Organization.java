@@ -1,7 +1,6 @@
 package tech.wetech.admin3.sys.model;
 
 import jakarta.persistence.*;
-
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -40,7 +39,6 @@ public class Organization extends BaseEntity {
     }
     return org.getName();
   }
-
 
   public String getName() {
     return name;
@@ -83,13 +81,9 @@ public class Organization extends BaseEntity {
   }
 
   public enum Type {
-    /**
-     * Department
-     */
+    /** Department */
     DEPARTMENT,
-    /**
-     * Job
-     */
+    /** Job */
     JOB
   }
 }

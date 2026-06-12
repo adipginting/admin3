@@ -1,5 +1,13 @@
 package tech.wetech.admin3.controller;
 
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.core.Is.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static tech.wetech.admin3.Constants.TOKEN;
+import static tech.wetech.admin3.Constants.TOKEN_HEADER_NAME;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -9,14 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import tech.wetech.admin3.AbstractIntegrationTest;
 import tech.wetech.admin3.common.JsonUtils;
 
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.core.Is.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static tech.wetech.admin3.Constants.TOKEN;
-import static tech.wetech.admin3.Constants.TOKEN_HEADER_NAME;
-
 /**
  * @author cjbi
  */
@@ -24,111 +24,118 @@ import static tech.wetech.admin3.Constants.TOKEN_HEADER_NAME;
 @AutoConfigureMockMvc
 class RoleControllerTest extends AbstractIntegrationTest {
 
-  @Autowired
-  private MockMvc mvc;
+  @Autowired private MockMvc mvc;
 
   @Test
   void testFindRoles() throws Exception {
-    mvc.perform(get("/roles")
-        .header(TOKEN_HEADER_NAME, TOKEN)
-      )
-      .andExpect(status().isOk())
-      .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-      .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))));
-
+    mvc.perform(get("/roles").header(TOKEN_HEADER_NAME, TOKEN))
+        .andExpect(status().isOk())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))));
   }
 
   @Test
   void testFindRoleUsers() throws Exception {
-    mvc.perform(get("/roles/{roleId}/users", 1)
-        .header(TOKEN_HEADER_NAME, TOKEN)
-      )
-      .andExpect(status().isOk())
-      .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-      .andExpect(jsonPath("total", greaterThanOrEqualTo(1)));
+    mvc.perform(get("/roles/{roleId}/users", 1).header(TOKEN_HEADER_NAME, TOKEN))
+        .andExpect(status().isOk())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("total", greaterThanOrEqualTo(1)));
   }
 
   @Test
   void testCreateRole() throws Exception {
-    mvc.perform(post("/roles")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header(TOKEN_HEADER_NAME, TOKEN)
-        .content("""
+    mvc.perform(
+            post("/roles")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header(TOKEN_HEADER_NAME, TOKEN)
+                .content(
+                    """
           {
             "name": "Test Role 223",
             "description": "Test Role 223 Description"
           }
           """))
-      .andExpect(status().isCreated())
-      .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-      .andExpect(jsonPath("name", is("Test Role 223")));
+        .andExpect(status().isCreated())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("name", is("Test Role 223")));
   }
 
   @Test
   void testChangeResources() throws Exception {
-    mvc.perform(put("/roles/{roleId}/resources", 4)
-        .contentType(MediaType.APPLICATION_JSON)
-        .header(TOKEN_HEADER_NAME, TOKEN)
-        .content("""
+    mvc.perform(
+            put("/roles/{roleId}/resources", 4)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header(TOKEN_HEADER_NAME, TOKEN)
+                .content(
+                    """
           {
             "resourceIds": [3,4,5,6,7]
           }
           """))
-      .andExpect(status().isOk())
-      .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-      .andExpect(jsonPath("id", is(4)));
+        .andExpect(status().isOk())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("id", is(4)));
   }
 
   @Test
   void testChangeUsers() throws Exception {
-    mvc.perform(put("/roles/{roleId}/users", 4)
-        .contentType(MediaType.APPLICATION_JSON)
-        .header(TOKEN_HEADER_NAME, TOKEN)
-        .content("""
+    mvc.perform(
+            put("/roles/{roleId}/users", 4)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header(TOKEN_HEADER_NAME, TOKEN)
+                .content(
+                    """
           {
             "userIds": [202,203,204]
           }
           """))
-      .andExpect(status().isOk())
-      .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-      .andExpect(jsonPath("id", is(4)));
+        .andExpect(status().isOk())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("id", is(4)));
   }
 
   @Test
   void testUpdateRole() throws Exception {
-    mvc.perform(put("/roles/{roleId}", 4)
-        .contentType(MediaType.APPLICATION_JSON)
-        .header(TOKEN_HEADER_NAME, TOKEN)
-        .content("""
+    mvc.perform(
+            put("/roles/{roleId}", 4)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header(TOKEN_HEADER_NAME, TOKEN)
+                .content(
+                    """
            {
             "name": "Test Role 110",
             "description": "Test Role 110 Description"
           }
           """))
-      .andExpect(status().isOk())
-      .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-      .andExpect(jsonPath("name", is("Test Role 110")));
+        .andExpect(status().isOk())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("name", is("Test Role 110")));
   }
 
   @Test
   void testDeleteRole() throws Exception {
-    String json = mvc.perform(post("/roles")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header(TOKEN_HEADER_NAME, TOKEN)
-        .content("""
+    String json =
+        mvc.perform(
+                post("/roles")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header(TOKEN_HEADER_NAME, TOKEN)
+                    .content(
+                        """
           {
             "name": "Test Role Delete",
             "description": "Test Role Delete Description"
           }
           """))
-      .andExpect(status().isCreated())
-      .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-      .andExpect(jsonPath("name", is("Test Role Delete")))
-      .andReturn().getResponse().getContentAsString();
+            .andExpect(status().isCreated())
+            .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("name", is("Test Role Delete")))
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
 
-    mvc.perform(delete("/roles/{roleId}", JsonUtils.parseToMap(json).get("id"))
-        .header(TOKEN_HEADER_NAME, TOKEN)
-      )
-      .andExpect(status().isNoContent());
+    mvc.perform(
+            delete("/roles/{roleId}", JsonUtils.parseToMap(json).get("id"))
+                .header(TOKEN_HEADER_NAME, TOKEN))
+        .andExpect(status().isNoContent());
   }
 }

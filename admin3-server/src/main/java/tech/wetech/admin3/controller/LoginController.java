@@ -44,8 +44,5 @@ public class LoginController {
     return ResponseEntity.ok(sessionService.getLoginUserInfo(token));
   }
 
-  record LoginRequest(@NotBlank String username, @NotBlank String password) {
-  }
-
-
+  record LoginRequest(@NotBlank String username, @NotBlank String password) {}
 }

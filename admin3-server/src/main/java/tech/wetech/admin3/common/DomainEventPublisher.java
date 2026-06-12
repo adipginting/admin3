@@ -22,7 +22,8 @@ import java.util.function.Consumer;
 
 public class DomainEventPublisher {
 
-  private static final ThreadLocal<DomainEventPublisher> instance = ThreadLocal.withInitial(() -> new DomainEventPublisher());
+  private static final ThreadLocal<DomainEventPublisher> instance =
+      ThreadLocal.withInitial(() -> new DomainEventPublisher());
 
   private boolean publishing;
 
@@ -87,31 +88,33 @@ public class DomainEventPublisher {
   }
 
   public <T> void asyncSubscribe(Class<T> subscribedToEventType, Consumer<T> event) {
-    subscribe(new DomainEventSubscriber<T>() {
-      @Override
-      public void handleEvent(T aDomainEvent) {
-        CompletableFuture.runAsync(() -> event.accept(aDomainEvent));
-      }
+    subscribe(
+        new DomainEventSubscriber<T>() {
+          @Override
+          public void handleEvent(T aDomainEvent) {
+            CompletableFuture.runAsync(() -> event.accept(aDomainEvent));
+          }
 
-      @Override
-      public Class<T> subscribedToEventType() {
-        return subscribedToEventType;
-      }
-    });
+          @Override
+          public Class<T> subscribedToEventType() {
+            return subscribedToEventType;
+          }
+        });
   }
 
   public <T> void subscribe(Class<T> subscribedToEventType, Consumer<T> event) {
-    subscribe(new DomainEventSubscriber<T>() {
-      @Override
-      public void handleEvent(T aDomainEvent) {
-        event.accept(aDomainEvent);
-      }
+    subscribe(
+        new DomainEventSubscriber<T>() {
+          @Override
+          public void handleEvent(T aDomainEvent) {
+            event.accept(aDomainEvent);
+          }
 
-      @Override
-      public Class<T> subscribedToEventType() {
-        return subscribedToEventType;
-      }
-    });
+          @Override
+          public Class<T> subscribedToEventType() {
+            return subscribedToEventType;
+          }
+        });
   }
 
   @SuppressWarnings("rawtypes")

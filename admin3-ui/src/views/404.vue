@@ -1,14 +1,14 @@
 <template>
-	<div class="error-page">
-		<div class="error-code">4<span>0</span>4</div>
-		<div class="error-desc">Oops~ The page you visited does not exist</div>
-		<div class="error-handle">
-			<router-link to="/">
-				<el-button type="primary" size="large">Back to Home</el-button>
-			</router-link>
-			<el-button class="error-btn" type="primary" size="large" @click="goBack">Back to Previous</el-button>
-		</div>
-	</div>
+  <div class="error-page">
+    <div class="error-code">4<span>0</span>4</div>
+    <div class="error-desc">Oops~ The page you visited does not exist</div>
+    <div class="error-handle">
+      <router-link to="/">
+        <el-button type="primary" size="large">Back to Home</el-button>
+      </router-link>
+      <el-button class="error-btn" type="primary" size="large" @click="goBack">Back to Previous</el-button>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts" name="404">
@@ -16,39 +16,39 @@ import {useRouter} from 'vue-router';
 
 const router = useRouter();
 const goBack = () => {
-	router.go(-1);
+  router.go(-1);
 };
 </script>
 
 <style scoped>
 .error-page {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	width: 100%;
-	height: 100%;
-	background: #f3f3f3;
-	box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: #f3f3f3;
+  box-sizing: border-box;
 }
 .error-code {
-	line-height: 1;
-	font-size: 250px;
-	font-weight: bolder;
-	color: #2d8cf0;
+  line-height: 1;
+  font-size: 250px;
+  font-weight: bolder;
+  color: #2d8cf0;
 }
 .error-code span {
-	color: #00a854;
+  color: #00a854;
 }
 .error-desc {
-	font-size: 30px;
-	color: #777;
+  font-size: 30px;
+  color: #777;
 }
 .error-handle {
-	margin-top: 30px;
-	padding-bottom: 200px;
+  margin-top: 30px;
+  padding-bottom: 200px;
 }
 .error-btn {
-	margin-left: 100px;
+  margin-left: 100px;
 }
 </style>

@@ -1,9 +1,13 @@
 package tech.wetech.admin3.controller;
 
+import static tech.wetech.admin3.sys.model.Organization.Type;
+
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.SortDefault;
@@ -20,11 +24,6 @@ import tech.wetech.admin3.sys.service.UserService;
 import tech.wetech.admin3.sys.service.dto.OrgTreeDTO;
 import tech.wetech.admin3.sys.service.dto.OrgUserDTO;
 import tech.wetech.admin3.sys.service.dto.PageDTO;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
-import static tech.wetech.admin3.sys.model.Organization.Type;
 
 /**
  * @author cjbi
@@ -50,21 +49,34 @@ public class OrganizationController {
 
   @RequiresPermissions("user:view")
   @GetMapping("/{organizationId}/users")
-  public ResponseEntity<PageDTO<OrgUserDTO>> findOrgUsers(@SortDefault(sort = "lastLoginTime", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(required = false) String username, @RequestParam(required = false) User.State state, @RequestParam(required = false) LocalDateTime lastLoginTimeStart, @RequestParam(required = false) LocalDateTime lastLoginTimeEnd, @PathVariable Long organizationId) {
+  public ResponseEntity<PageDTO<OrgUserDTO>> findOrgUsers(
+      @SortDefault(sort = "lastLoginTime", direction = Sort.Direction.DESC) Pageable pageable,
+      @RequestParam(required = false) String username,
+      @RequestParam(required = false) User.State state,
+      @RequestParam(required = false) LocalDateTime lastLoginTimeStart,
+      @RequestParam(required = false) LocalDateTime lastLoginTimeEnd,
+      @PathVariable Long organizationId) {
     Organization organization = organizationService.findOrganization(organizationId);
-    return ResponseEntity.ok(userService.findOrgUsers(pageable, username, state, organization, lastLoginTimeStart, lastLoginTimeEnd));
+    return ResponseEntity.ok(
+        userService.findOrgUsers(
+            pageable, username, state, organization, lastLoginTimeStart, lastLoginTimeEnd));
   }
 
   @RequiresPermissions("organization:create")
   @PostMapping
-  public ResponseEntity<Organization> createOrganization(@RequestBody @Valid OrganizationRequest request) {
-    return new ResponseEntity<>(organizationService.createOrganization(request.name(), request.type(), request.parentId()), HttpStatus.CREATED);
+  public ResponseEntity<Organization> createOrganization(
+      @RequestBody @Valid OrganizationRequest request) {
+    return new ResponseEntity<>(
+        organizationService.createOrganization(request.name(), request.type(), request.parentId()),
+        HttpStatus.CREATED);
   }
 
   @RequiresPermissions("organization:update")
   @PutMapping("/{organizationId}")
-  public ResponseEntity<Organization> updateOrganization(@PathVariable Long organizationId, @RequestBody @Valid OrganizationRequest request) {
-    return ResponseEntity.ok(organizationService.updateOrganization(organizationId, request.name()));
+  public ResponseEntity<Organization> updateOrganization(
+      @PathVariable Long organizationId, @RequestBody @Valid OrganizationRequest request) {
+    return ResponseEntity.ok(
+        organizationService.updateOrganization(organizationId, request.name()));
   }
 
   @RequiresPermissions("organization:delete")
@@ -78,9 +90,5 @@ public class OrganizationController {
     return ResponseEntity.noContent().build();
   }
 
-  record OrganizationRequest(@NotBlank String name, @NotNull Type type, @NotNull Long parentId) {
-
-  }
-
-
+  record OrganizationRequest(@NotBlank String name, @NotNull Type type, @NotNull Long parentId) {}
 }

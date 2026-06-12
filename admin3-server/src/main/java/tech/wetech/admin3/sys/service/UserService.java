@@ -1,5 +1,11 @@
 package tech.wetech.admin3.sys.service;
 
+import static tech.wetech.admin3.common.CommonResultStatus.RECORD_NOT_EXIST;
+
+import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,13 +23,6 @@ import tech.wetech.admin3.sys.service.dto.OrgUserDTO;
 import tech.wetech.admin3.sys.service.dto.PageDTO;
 import tech.wetech.admin3.sys.service.dto.UserinfoDTO;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static tech.wetech.admin3.common.CommonResultStatus.RECORD_NOT_EXIST;
-
 /**
  * @author cjbi
  */
@@ -37,7 +36,12 @@ public class UserService {
   }
 
   @Transactional
-  public User createUser(String username, String avatar, User.Gender gender, User.State state, Organization organization) {
+  public User createUser(
+      String username,
+      String avatar,
+      User.Gender gender,
+      User.State state,
+      Organization organization) {
     User user = new User();
     user.setUsername(username);
     user.setAvatar(avatar);
@@ -55,15 +59,42 @@ public class UserService {
   }
 
   public User findUserById(Long userId) {
-    return userRepository.findById(userId)
-      .orElseThrow(() -> new BusinessException(RECORD_NOT_EXIST));
+    return userRepository
+        .findById(userId)
+        .orElseThrow(() -> new BusinessException(RECORD_NOT_EXIST));
   }
 
-  public PageDTO<OrgUserDTO> findOrgUsers(Pageable pageable, String username, User.State state, Organization organization, LocalDateTime lastLoginTimeStart, LocalDateTime lastLoginTimeEnd) {
-    Page<User> page = userRepository.findOrgUsers(pageable, username, state, organization, organization.makeSelfAsParentIds(), lastLoginTimeStart, lastLoginTimeEnd);
-    return new PageDTO<>(page.getContent().stream().map(u ->
-        new OrgUserDTO(u.getId(), u.getUsername(), u.getAvatar(), u.getGender(), u.getState(), u.getOrgFullName(), u.getCreatedTime(), u.getLastLoginTime()))
-      .collect(Collectors.toList()), page.getTotalElements());
+  public PageDTO<OrgUserDTO> findOrgUsers(
+      Pageable pageable,
+      String username,
+      User.State state,
+      Organization organization,
+      LocalDateTime lastLoginTimeStart,
+      LocalDateTime lastLoginTimeEnd) {
+    Page<User> page =
+        userRepository.findOrgUsers(
+            pageable,
+            username,
+            state,
+            organization,
+            organization.makeSelfAsParentIds(),
+            lastLoginTimeStart,
+            lastLoginTimeEnd);
+    return new PageDTO<>(
+        page.getContent().stream()
+            .map(
+                u ->
+                    new OrgUserDTO(
+                        u.getId(),
+                        u.getUsername(),
+                        u.getAvatar(),
+                        u.getGender(),
+                        u.getState(),
+                        u.getOrgFullName(),
+                        u.getCreatedTime(),
+                        u.getLastLoginTime()))
+            .collect(Collectors.toList()),
+        page.getTotalElements());
   }
 
   public boolean existsUsers(Organization organization) {
@@ -71,9 +102,9 @@ public class UserService {
     return userRepository.countOrgUsers(organization, orgParentIds) > 0;
   }
 
-
   @Transactional
-  public User updateUser(Long userId, String avatar, User.Gender gender, User.State state, Organization organization) {
+  public User updateUser(
+      Long userId, String avatar, User.Gender gender, User.State state, Organization organization) {
     User user = findUserById(userId);
     user.setAvatar(avatar);
     user.setGender(gender);

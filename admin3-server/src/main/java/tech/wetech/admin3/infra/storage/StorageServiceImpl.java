@@ -1,5 +1,10 @@
 package tech.wetech.admin3.infra.storage;
 
+import static tech.wetech.admin3.common.CommonResultStatus.FAIL;
+
+import java.io.InputStream;
+import java.util.List;
+import java.util.Random;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -19,12 +24,6 @@ import tech.wetech.admin3.sys.repository.StorageFileRepository;
 import tech.wetech.admin3.sys.service.StorageService;
 import tech.wetech.admin3.sys.service.dto.StorageFileDTO;
 
-import java.io.InputStream;
-import java.util.List;
-import java.util.Random;
-
-import static tech.wetech.admin3.common.CommonResultStatus.FAIL;
-
 /**
  * @author cjbi
  */
@@ -34,7 +33,9 @@ public class StorageServiceImpl implements StorageService {
   private final StorageConfigRepository storageConfigRepository;
   private final StorageFileRepository storageFileRepository;
 
-  public StorageServiceImpl(StorageConfigRepository storageConfigRepository, StorageFileRepository storageFileRepository) {
+  public StorageServiceImpl(
+      StorageConfigRepository storageConfigRepository,
+      StorageFileRepository storageFileRepository) {
     this.storageConfigRepository = storageConfigRepository;
     this.storageFileRepository = storageFileRepository;
   }
@@ -46,19 +47,48 @@ public class StorageServiceImpl implements StorageService {
 
   @Override
   public StorageConfig getConfig(Long id) {
-    return storageConfigRepository.findById(id)
-      .orElseThrow(() -> new StorageException(FAIL, "Storage configuration does not exist"));
+    return storageConfigRepository
+        .findById(id)
+        .orElseThrow(() -> new StorageException(FAIL, "Storage configuration does not exist"));
   }
 
   @Override
   @Transactional
-  public StorageConfig createConfig(String name, StorageConfig.Type type, String endpoint, String accessKey, String secretKey, String bucketName, String address, String storagePath) {
-    StorageConfig config = storageConfigRepository.save(buildConfig(null, name, type, endpoint, bucketName, accessKey, secretKey, address, storagePath));
+  public StorageConfig createConfig(
+      String name,
+      StorageConfig.Type type,
+      String endpoint,
+      String accessKey,
+      String secretKey,
+      String bucketName,
+      String address,
+      String storagePath) {
+    StorageConfig config =
+        storageConfigRepository.save(
+            buildConfig(
+                null,
+                name,
+                type,
+                endpoint,
+                bucketName,
+                accessKey,
+                secretKey,
+                address,
+                storagePath));
     DomainEventPublisher.instance().publish(new StorageConfigCreated(config));
     return config;
   }
 
-  private StorageConfig buildConfig(Long id, String name, StorageConfig.Type type, String endpoint, String bucketName, String accessKey, String secretKey, String address, String storagePath) {
+  private StorageConfig buildConfig(
+      Long id,
+      String name,
+      StorageConfig.Type type,
+      String endpoint,
+      String bucketName,
+      String accessKey,
+      String secretKey,
+      String address,
+      String storagePath) {
     StorageConfig storageConfig;
     if (id != null) {
       storageConfig = getConfig(id);
@@ -80,8 +110,20 @@ public class StorageServiceImpl implements StorageService {
 
   @Override
   @Transactional
-  public StorageConfig updateConfig(Long id, String name, StorageConfig.Type type, String endpoint, String accessKey, String secretKey, String bucketName, String address, String storagePath) {
-    StorageConfig config = storageConfigRepository.save(buildConfig(id, name, type, endpoint, bucketName, accessKey, secretKey, address, storagePath));
+  public StorageConfig updateConfig(
+      Long id,
+      String name,
+      StorageConfig.Type type,
+      String endpoint,
+      String accessKey,
+      String secretKey,
+      String bucketName,
+      String address,
+      String storagePath) {
+    StorageConfig config =
+        storageConfigRepository.save(
+            buildConfig(
+                id, name, type, endpoint, bucketName, accessKey, secretKey, address, storagePath));
     DomainEventPublisher.instance().publish(new StorageConfigUpdated(config));
     return config;
   }
@@ -108,10 +150,14 @@ public class StorageServiceImpl implements StorageService {
     DomainEventPublisher.instance().publish(new StorageConfigMarkedAsDefault(storageConfig));
   }
 
-
   @Override
   @Transactional
-  public StorageFileDTO store(String storageId, InputStream inputStream, long contentLength, String contentType, String filename) {
+  public StorageFileDTO store(
+      String storageId,
+      InputStream inputStream,
+      long contentLength,
+      String contentType,
+      String filename) {
     String key = generateKey(filename);
     Storage storage;
     if (storageId != null) {
@@ -133,7 +179,6 @@ public class StorageServiceImpl implements StorageService {
     dto.setUrl(url);
     return dto;
   }
-
 
   private Storage getStorage() {
     StorageConfig config = storageConfigRepository.getDefaultConfig();
@@ -191,5 +236,4 @@ public class StorageServiceImpl implements StorageService {
     InputStream is = storage.getFileContent(key);
     return new InputStreamResource(is);
   }
-
 }

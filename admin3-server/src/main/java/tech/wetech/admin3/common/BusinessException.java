@@ -19,6 +19,4 @@ public class BusinessException extends RuntimeException {
   public ResultStatus getStatus() {
     return status;
   }
-
-
 }

@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class CollectionUtils {
 
-  //TODO - complete JavaDoc
+  // TODO - complete JavaDoc
 
   public static <E> Set<E> asSet(E... elements) {
     if (elements == null || elements.length == 0) {
@@ -26,12 +26,12 @@ public class CollectionUtils {
   }
 
   /**
-   * Returns {@code true} if the specified {@code Collection} is {@code null} or {@link Collection#isEmpty empty},
-   * {@code false} otherwise.
+   * Returns {@code true} if the specified {@code Collection} is {@code null} or {@link
+   * Collection#isEmpty empty}, {@code false} otherwise.
    *
    * @param c the collection to check
-   * @return {@code true} if the specified {@code Collection} is {@code null} or {@link Collection#isEmpty empty},
-   * {@code false} otherwise.
+   * @return {@code true} if the specified {@code Collection} is {@code null} or {@link
+   *     Collection#isEmpty empty}, {@code false} otherwise.
    * @since 1.0
    */
   public static boolean isEmpty(Collection c) {
@@ -44,7 +44,7 @@ public class CollectionUtils {
    *
    * @param m the {@code Map} to check
    * @return {@code true} if the specified {@code Map} is {@code null} or {@link Map#isEmpty empty},
-   * {@code false} otherwise.
+   *     {@code false} otherwise.
    * @since 1.0
    */
   public static boolean isEmpty(Map m) {
@@ -78,20 +78,21 @@ public class CollectionUtils {
       return Collections.emptyList();
     }
 
-    // Integer overflow does not occur when a large array is passed in because the list array already exists
+    // Integer overflow does not occur when a large array is passed in because the list array
+    // already exists
     return Arrays.asList(elements);
   }
 
-    /*public static <E> Deque<E> asDeque(E... elements) {
-        if (elements == null || elements.length == 0) {
-            return new ArrayDeque<E>();
-        }
-        // Avoid integer overflow when a large array is passed in
-        int capacity = computeListCapacity(elements.length);
-        ArrayDeque<E> deque = new ArrayDeque<E>(capacity);
-        Collections.addAll(deque, elements);
-        return deque;
-    }*/
+  /*public static <E> Deque<E> asDeque(E... elements) {
+      if (elements == null || elements.length == 0) {
+          return new ArrayDeque<E>();
+      }
+      // Avoid integer overflow when a large array is passed in
+      int capacity = computeListCapacity(elements.length);
+      ArrayDeque<E> deque = new ArrayDeque<E>(capacity);
+      Collections.addAll(deque, elements);
+      return deque;
+  }*/
 
   static int computeListCapacity(int arraySize) {
     return (int) Math.min(5L + arraySize + (arraySize / 10), Integer.MAX_VALUE);

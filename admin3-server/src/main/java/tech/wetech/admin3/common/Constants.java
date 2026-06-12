@@ -7,9 +7,6 @@ public class Constants {
 
   public static final String SESSION_CURRENT_USER = "currentUser";
 
-  /**
-   * Menu root id
-   */
+  /** Menu root id */
   public static final long RESOURCE_ROOT_ID = 1L;
-
 }

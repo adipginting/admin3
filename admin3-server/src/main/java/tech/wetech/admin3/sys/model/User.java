@@ -1,14 +1,13 @@
 package tech.wetech.admin3.sys.model;
 
-import jakarta.persistence.*;
+import static jakarta.persistence.FetchType.LAZY;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static jakarta.persistence.FetchType.LAZY;
 
 /**
  * User
@@ -29,16 +28,15 @@ public class User extends BaseEntity {
   @Column(nullable = false)
   private State state;
 
-  @Column
-  private LocalDateTime createdTime;
+  @Column private LocalDateTime createdTime;
 
-  @Column
-  private LocalDateTime lastLoginTime;
+  @Column private LocalDateTime lastLoginTime;
 
   @ManyToMany(fetch = LAZY, cascade = CascadeType.DETACH)
-  @JoinTable(name = "user_role",
-    joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+  @JoinTable(
+      name = "user_role",
+      joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
   private Set<Role> roles = new LinkedHashSet<>();
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "id", orphanRemoval = true)
@@ -70,24 +68,25 @@ public class User extends BaseEntity {
    */
   public Set<String> findPermissions() {
     return roles.stream()
-      .map(Role::getResources)
-      .flatMap(Collection::stream)
-      .map(Resource::getPermission)
-      .collect(Collectors.toSet());
+        .map(Role::getResources)
+        .flatMap(Collection::stream)
+        .map(Resource::getPermission)
+        .collect(Collectors.toSet());
   }
 
   public enum Gender {
-    MALE, FEMALE
+    MALE,
+    FEMALE
   }
 
   public enum State {
-    NORMAL, LOCKED
+    NORMAL,
+    LOCKED
   }
 
   public boolean isLocked() {
     return this.state == State.LOCKED;
   }
-
 
   public String getUsername() {
     return username;

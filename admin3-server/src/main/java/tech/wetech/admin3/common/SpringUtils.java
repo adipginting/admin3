@@ -15,7 +15,8 @@ public final class SpringUtils implements BeanFactoryPostProcessor {
   private static ConfigurableListableBeanFactory beanFactory; // Spring application context
 
   @Override
-  public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+  public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory)
+      throws BeansException {
     SpringUtils.beanFactory = beanFactory;
   }
 
@@ -55,7 +56,9 @@ public final class SpringUtils implements BeanFactoryPostProcessor {
   }
 
   /**
-   * Determine whether the bean definition registered under the given name is a singleton or a prototype. If the corresponding bean definition is not found, an exception (NoSuchBeanDefinitionException) will be thrown
+   * Determine whether the bean definition registered under the given name is a singleton or a
+   * prototype. If the corresponding bean definition is not found, an exception
+   * (NoSuchBeanDefinitionException) will be thrown
    *
    * @param name
    * @return boolean

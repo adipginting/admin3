@@ -18,5 +18,4 @@ public interface SessionService {
   UserinfoDTO getLoginUserInfo(String token);
 
   void refresh();
-
 }

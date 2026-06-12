@@ -4,13 +4,9 @@ package tech.wetech.admin3.common;
  * @author cjbi
  */
 public interface ResultStatus {
-  /**
-   * Error code
-   */
+  /** Error code */
   int getCode();
 
-  /**
-   * Error message
-   */
+  /** Error message */
   String getMessage();
 }

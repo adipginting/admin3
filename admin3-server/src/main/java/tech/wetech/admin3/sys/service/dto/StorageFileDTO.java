@@ -1,8 +1,7 @@
 package tech.wetech.admin3.sys.service.dto;
 
-import tech.wetech.admin3.sys.model.StorageFile;
-
 import java.time.LocalDateTime;
+import tech.wetech.admin3.sys.model.StorageFile;
 
 /**
  * @author cjbi
@@ -11,19 +10,13 @@ public class StorageFileDTO extends StorageFile {
 
   private String key;
 
-  /**
-   * File name
-   */
+  /** File name */
   private String name;
 
-  /**
-   * File type
-   */
+  /** File type */
   private String type;
 
-  /**
-   * File size
-   */
+  /** File size */
   private Long size;
 
   private String createUser;

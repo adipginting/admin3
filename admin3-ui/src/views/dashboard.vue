@@ -96,8 +96,8 @@
                 <div
                     class="todo-item"
                     :class="{
-										'todo-item-del': scope.row.status
-									}"
+                    'todo-item-del': scope.row.status
+                  }"
                 >
                   {{ scope.row.title }}
                 </div>

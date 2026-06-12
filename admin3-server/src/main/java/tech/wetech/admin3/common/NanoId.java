@@ -7,36 +7,32 @@ import java.util.Random;
  * NanoId, a small, secure, URL-friendly unique string ID generator, features:
  *
  * <ul>
- *     <li>Secure: It uses cryptographically strong random APIs and guarantees proper symbol distribution</li>
- *     <li>Small: Only 258 bytes (compressed), zero dependencies</li>
- *     <li>Compact: It uses more symbols than UUID (A-Za-z0-9_~)</li>
+ *   <li>Secure: It uses cryptographically strong random APIs and guarantees proper symbol
+ *       distribution
+ *   <li>Small: Only 258 bytes (compressed), zero dependencies
+ *   <li>Compact: It uses more symbols than UUID (A-Za-z0-9_~)
  * </ul>
  *
- * <p>
- * This implementation is based on the JavaScript NanoId implementation, see: https://github.com/ai/nanoid
+ * <p>This implementation is based on the JavaScript NanoId implementation, see:
+ * https://github.com/ai/nanoid
  *
  * @author David Klebanoff
  */
 public class NanoId {
 
-  /**
-   * Default random number generator, uses {@link SecureRandom} for robustness
-   */
+  /** Default random number generator, uses {@link SecureRandom} for robustness */
   private static final SecureRandom DEFAULT_NUMBER_GENERATOR = new SecureRandom();
 
-  /**
-   * Default random alphabet, uses URL-safe Base64 characters
-   */
+  /** Default random alphabet, uses URL-safe Base64 characters */
   private static final char[] DEFAULT_ALPHABET =
-    "_-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+      "_-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 
-  /**
-   * Default length
-   */
+  /** Default length */
   public static final int DEFAULT_SIZE = 21;
 
   /**
-   * Generate a pseudo-random NanoId string with the default length {@link #DEFAULT_SIZE}, using a cryptographically secure pseudo-random generator
+   * Generate a pseudo-random NanoId string with the default length {@link #DEFAULT_SIZE}, using a
+   * cryptographically secure pseudo-random generator
    *
    * @return Pseudo-random NanoId string
    */
@@ -57,9 +53,9 @@ public class NanoId {
   /**
    * Generate a pseudo-random NanoId string
    *
-   * @param random   Random number generator
+   * @param random Random number generator
    * @param alphabet Random alphabet
-   * @param size     ID length
+   * @param size ID length
    * @return Pseudo-random NanoId string
    */
   public static String randomNanoId(Random random, char[] alphabet, int size) {
@@ -98,5 +94,4 @@ public class NanoId {
       }
     }
   }
-
 }

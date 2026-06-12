@@ -1,7 +1,6 @@
 package tech.wetech.admin3.sys.model;
 
 import jakarta.persistence.*;
-
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -31,13 +30,15 @@ public class Resource extends BaseEntity {
   private String url;
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-  @JoinTable(name = "role_resource",
-    joinColumns = @JoinColumn(name = "resource_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+  @JoinTable(
+      name = "role_resource",
+      joinColumns = @JoinColumn(name = "resource_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
   private Set<Role> roles = new LinkedHashSet<>();
 
   public enum Type {
-    MENU, BUTTON
+    MENU,
+    BUTTON
   }
 
   public String getIcon() {

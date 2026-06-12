@@ -6,5 +6,4 @@ import tech.wetech.admin3.sys.model.StorageConfig;
 /**
  * @author cjbi
  */
-public record StorageConfigMarkedAsDefault(StorageConfig config) implements DomainEvent {
-}
+public record StorageConfigMarkedAsDefault(StorageConfig config) implements DomainEvent {}

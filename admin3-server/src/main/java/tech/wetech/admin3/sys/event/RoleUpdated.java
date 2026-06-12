@@ -6,5 +6,4 @@ import tech.wetech.admin3.sys.model.Role;
 /**
  * @author cjbi
  */
-public record RoleUpdated(Role role) implements DomainEvent {
-}
+public record RoleUpdated(Role role) implements DomainEvent {}

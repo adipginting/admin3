@@ -15,5 +15,4 @@ public interface StorageConfigRepository extends JpaRepository<StorageConfig, Lo
   StorageConfig getDefaultConfig();
 
   StorageConfig getByStorageId(String storageId);
-
 }

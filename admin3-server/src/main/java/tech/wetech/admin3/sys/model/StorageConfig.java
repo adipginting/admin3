@@ -3,14 +3,13 @@ package tech.wetech.admin3.sys.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrePersist;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import tech.wetech.admin3.common.Constants;
 import tech.wetech.admin3.common.SessionItemHolder;
 import tech.wetech.admin3.common.StringUtils;
 import tech.wetech.admin3.sys.service.dto.UserinfoDTO;
-
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author cjbi
@@ -51,7 +50,10 @@ public class StorageConfig extends BaseEntity {
   }
 
   public enum Type {
-    LOCAL, S3, OSS, OBS
+    LOCAL,
+    S3,
+    OSS,
+    OBS
   }
 
   public String getStorageId() {
@@ -138,7 +140,6 @@ public class StorageConfig extends BaseEntity {
     this.storagePath = storagePath;
   }
 
-
   public String getCreateUser() {
     return createUser;
   }
@@ -185,5 +186,4 @@ public class StorageConfig extends BaseEntity {
     attributes.putAll(System.getProperties());
     return StringUtils.simpleRenderTemplate(template, attributes);
   }
-
 }

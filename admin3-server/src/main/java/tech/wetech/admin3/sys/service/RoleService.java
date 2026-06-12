@@ -1,5 +1,8 @@
 package tech.wetech.admin3.sys.service;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,10 +21,6 @@ import tech.wetech.admin3.sys.service.dto.PageDTO;
 import tech.wetech.admin3.sys.service.dto.RoleDTO;
 import tech.wetech.admin3.sys.service.dto.RoleUserDTO;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 /**
  * @author cjbi
  */
@@ -35,19 +34,22 @@ public class RoleService {
   }
 
   public List<RoleDTO> findRoles() {
-    return roleRepository.findAll().stream().map(role -> new RoleDTO(
-        role.getId(),
-        role.getName(),
-        role.getDescription(),
-        role.getAvailable(),
-        role.getResources().stream().map(Resource::getId).toList())
-      )
-      .toList();
+    return roleRepository.findAll().stream()
+        .map(
+            role ->
+                new RoleDTO(
+                    role.getId(),
+                    role.getName(),
+                    role.getDescription(),
+                    role.getAvailable(),
+                    role.getResources().stream().map(Resource::getId).toList()))
+        .toList();
   }
 
   public Role findRoleById(Long roleId) {
-    return roleRepository.findById(roleId)
-      .orElseThrow(() -> new BusinessException(CommonResultStatus.RECORD_NOT_EXIST));
+    return roleRepository
+        .findById(roleId)
+        .orElseThrow(() -> new BusinessException(CommonResultStatus.RECORD_NOT_EXIST));
   }
 
   @Transactional
@@ -95,9 +97,19 @@ public class RoleService {
 
   public PageDTO<RoleUserDTO> findRoleUsers(Long roleId, Pageable pageable) {
     Page<User> page = roleRepository.findRoleUsers(roleId, pageable);
-    return new PageDTO<>(page.getContent().stream()
-      .map(u -> new RoleUserDTO(u.getId(), u.getUsername(), u.getAvatar(), u.getGender(), u.getState(), u.getRoles(), u.getCreatedTime()))
-      .collect(Collectors.toList()),
-      page.getTotalElements());
+    return new PageDTO<>(
+        page.getContent().stream()
+            .map(
+                u ->
+                    new RoleUserDTO(
+                        u.getId(),
+                        u.getUsername(),
+                        u.getAvatar(),
+                        u.getGender(),
+                        u.getState(),
+                        u.getRoles(),
+                        u.getCreatedTime()))
+            .collect(Collectors.toList()),
+        page.getTotalElements());
   }
 }

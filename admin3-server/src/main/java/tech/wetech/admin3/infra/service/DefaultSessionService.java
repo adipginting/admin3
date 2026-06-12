@@ -1,6 +1,10 @@
 package tech.wetech.admin3.infra.service;
 
+import static tech.wetech.admin3.sys.model.UserCredential.IdentityType.PASSWORD;
+
 import jakarta.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -19,11 +23,6 @@ import tech.wetech.admin3.sys.repository.UserRepository;
 import tech.wetech.admin3.sys.service.SessionService;
 import tech.wetech.admin3.sys.service.dto.UserinfoDTO;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
-
-import static tech.wetech.admin3.sys.model.UserCredential.IdentityType.PASSWORD;
-
 /**
  * @author cjbi
  */
@@ -36,27 +35,41 @@ public class DefaultSessionService implements SessionService {
 
   private final SessionManager sessionManager;
 
-  public DefaultSessionService(UserCredentialRepository userCredentialRepository, UserRepository userRepository, SessionManager sessionManager) {
+  public DefaultSessionService(
+      UserCredentialRepository userCredentialRepository,
+      UserRepository userRepository,
+      SessionManager sessionManager) {
     this.userCredentialRepository = userCredentialRepository;
     this.userRepository = userRepository;
     this.sessionManager = sessionManager;
   }
 
-
   @Override
   @Transactional
   public UserinfoDTO login(String username, String password) {
-    UserCredential credential = userCredentialRepository.findCredential(username, PASSWORD)
-      .orElseThrow(() -> new UserException(CommonResultStatus.UNAUTHORIZED, "Incorrect password"));
+    UserCredential credential =
+        userCredentialRepository
+            .findCredential(username, PASSWORD)
+            .orElseThrow(
+                () -> new UserException(CommonResultStatus.UNAUTHORIZED, "Incorrect password"));
     if (credential.doCredentialMatch(password)) {
       User user = credential.getUser();
       if (user.isLocked()) {
-        throw new UserException(CommonResultStatus.UNAUTHORIZED, "User has been disabled, please contact the administrator");
+        throw new UserException(
+            CommonResultStatus.UNAUTHORIZED,
+            "User has been disabled, please contact the administrator");
       }
       user.setLastLoginTime(LocalDateTime.now());
       userRepository.save(user);
       String token = UUID.randomUUID().toString().replace("-", "");
-      UserinfoDTO userinfo = new UserinfoDTO(token, user.getId(), user.getUsername(), user.getAvatar(), new UserinfoDTO.Credential(credential.getIdentifier(), credential.getIdentityType()), user.findPermissions());
+      UserinfoDTO userinfo =
+          new UserinfoDTO(
+              token,
+              user.getId(),
+              user.getUsername(),
+              user.getAvatar(),
+              new UserinfoDTO.Credential(credential.getIdentifier(), credential.getIdentityType()),
+              user.findPermissions());
       sessionManager.store(token, credential, userinfo);
       SessionItemHolder.setItem(Constants.SESSION_CURRENT_USER, userinfo);
       DomainEventPublisher.instance().publish(new UserLoggedIn(userinfo, getClientIP()));
@@ -67,7 +80,8 @@ public class DefaultSessionService implements SessionService {
   }
 
   public String getClientIP() {
-    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    HttpServletRequest request =
+        ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     String ipAddress = request.getHeader("X-FORWARDED-FOR");
     if (ipAddress == null) {
       ipAddress = request.getRemoteAddr();

@@ -1,5 +1,7 @@
 package tech.wetech.admin3.sys.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import tech.wetech.admin3.common.CommonResultStatus;
@@ -13,9 +15,6 @@ import tech.wetech.admin3.sys.repository.OrganizationRepository;
 import tech.wetech.admin3.sys.repository.UserRepository;
 import tech.wetech.admin3.sys.service.dto.OrgTreeDTO;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * @author cjbi
  */
@@ -24,12 +23,15 @@ public class OrganizationService {
 
   private final OrganizationRepository organizationRepository;
 
-  public OrganizationService(OrganizationRepository organizationRepository, UserRepository userRepository) {
+  public OrganizationService(
+      OrganizationRepository organizationRepository, UserRepository userRepository) {
     this.organizationRepository = organizationRepository;
   }
 
   public Organization findOrganization(Long id) {
-    return organizationRepository.findById(id).orElseThrow(() -> new UserException(CommonResultStatus.RECORD_NOT_EXIST));
+    return organizationRepository
+        .findById(id)
+        .orElseThrow(() -> new UserException(CommonResultStatus.RECORD_NOT_EXIST));
   }
 
   @Transactional
@@ -63,7 +65,7 @@ public class OrganizationService {
 
   public List<OrgTreeDTO> findOrgTree(Long parentId) {
     return organizationRepository.findByParentId(parentId).stream()
-      .map(OrgTreeDTO::new)
-      .collect(Collectors.toList());
+        .map(OrgTreeDTO::new)
+        .collect(Collectors.toList());
   }
 }

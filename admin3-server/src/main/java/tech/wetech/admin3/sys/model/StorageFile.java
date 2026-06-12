@@ -1,11 +1,10 @@
 package tech.wetech.admin3.sys.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import tech.wetech.admin3.common.Constants;
 import tech.wetech.admin3.common.SessionItemHolder;
 import tech.wetech.admin3.sys.service.dto.UserinfoDTO;
-
-import java.time.LocalDateTime;
 
 /**
  * @author cjbi
@@ -14,25 +13,17 @@ import java.time.LocalDateTime;
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"key"})})
 public class StorageFile extends BaseEntity {
 
-  /**
-   * Unique index of the file
-   */
+  /** Unique index of the file */
   @Column(name = "`key`")
   private String key;
 
-  /**
-   * File name
-   */
+  /** File name */
   private String name;
 
-  /**
-   * File type
-   */
+  /** File type */
   private String type;
 
-  /**
-   * File size
-   */
+  /** File size */
   private Long size;
 
   private String createUser;

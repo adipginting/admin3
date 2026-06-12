@@ -165,10 +165,10 @@
         </el-form-item>
       </el-form>
       <template #footer>
-				<span class="dialog-footer">
-					<el-button @click="addVisible = false">Cancel</el-button>
-					<el-button type="primary" @click="saveAdd">OK</el-button>
-				</span>
+        <span class="dialog-footer">
+          <el-button @click="addVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="saveAdd">OK</el-button>
+        </span>
       </template>
     </el-dialog>
 
@@ -185,10 +185,10 @@
         </el-form>
       </el-form>
       <template #footer>
-				<span class="dialog-footer">
-					<el-button @click="editVisible = false">Cancel</el-button>
-					<el-button type="primary" @click="saveEdit">OK</el-button>
-				</span>
+        <span class="dialog-footer">
+          <el-button @click="editVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="saveEdit">OK</el-button>
+        </span>
       </template>
     </el-dialog>
   </div>

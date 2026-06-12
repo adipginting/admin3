@@ -1,6 +1,11 @@
 package tech.wetech.admin3.controller;
 
+import static java.util.Optional.ofNullable;
+
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,12 +16,6 @@ import tech.wetech.admin3.common.authz.RequiresPermissions;
 import tech.wetech.admin3.sys.service.LogService;
 import tech.wetech.admin3.sys.service.dto.LogDTO;
 import tech.wetech.admin3.sys.service.dto.PageDTO;
-
-import java.util.Arrays;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static java.util.Optional.ofNullable;
 
 /**
  * @author cjbi
@@ -35,12 +34,12 @@ public class LogController {
   @GetMapping
   @RequiresPermissions("log:view")
   public ResponseEntity<PageDTO<LogDTO>> findLogs(Pageable pageable, String typeNames) {
-    Set<String> typeNameSet = ofNullable(typeNames).stream()
-      .flatMap(t -> Arrays.stream(t.split(",")))
-      .collect(Collectors.toSet());
+    Set<String> typeNameSet =
+        ofNullable(typeNames).stream()
+            .flatMap(t -> Arrays.stream(t.split(",")))
+            .collect(Collectors.toSet());
     return ResponseEntity.ok(logService.findLogs(typeNameSet, pageable));
   }
-
 
   /**
    * Clean logs
@@ -53,5 +52,4 @@ public class LogController {
     logService.cleanLogs();
     return ResponseEntity.noContent().build();
   }
-
 }

@@ -39,9 +39,10 @@ public class StringUtils {
   }
 
   /**
-   * Implement a simple mustache-style template rendering, supporting <b>{{key}}<b/> format template content
+   * Implement a simple mustache-style template rendering, supporting <b>{{key}}<b/> format template
+   * content
    *
-   * @param template   Template
+   * @param template Template
    * @param attributes Attributes
    * @return Rendered result
    */
@@ -65,7 +66,8 @@ public class StringUtils {
     return template;
   }
 
-  private static String simpleRenderTemplate(String template, int length, int i, Map<?, ?> attributes) {
+  private static String simpleRenderTemplate(
+      String template, int length, int i, Map<?, ?> attributes) {
     StringBuilder valueBuilder = new StringBuilder();
     int endIndex = i - 2;
     label:
@@ -94,5 +96,4 @@ public class StringUtils {
     }
     return template.substring(0, endIndex) + value + template.substring(++i);
   }
-
 }

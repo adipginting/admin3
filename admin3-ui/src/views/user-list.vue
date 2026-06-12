@@ -169,10 +169,10 @@
         </el-form-item>
       </el-form>
       <template #footer>
-				<span class="dialog-footer">
-					<el-button @click="addOrgDialogVisible = false">Cancel</el-button>
-					<el-button type="primary" @click="saveAddOrgNode">OK</el-button>
-				</span>
+        <span class="dialog-footer">
+          <el-button @click="addOrgDialogVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="saveAddOrgNode">OK</el-button>
+        </span>
       </template>
     </el-dialog>
 
@@ -193,10 +193,10 @@
         </el-form-item>
       </el-form>
       <template #footer>
-				<span class="dialog-footer">
-					<el-button @click="updateOrgDialogVisible = false">Cancel</el-button>
-					<el-button type="primary" @click="saveUpdateOrgNode">OK</el-button>
-				</span>
+        <span class="dialog-footer">
+          <el-button @click="updateOrgDialogVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="saveUpdateOrgNode">OK</el-button>
+        </span>
       </template>
     </el-dialog>
 
@@ -221,10 +221,10 @@
         </el-form-item>
       </el-form>
       <template #footer>
-				<span class="dialog-footer">
-					<el-button @click="addVisible = false">Cancel</el-button>
-					<el-button type="primary" @click="saveAdd">OK</el-button>
-				</span>
+        <span class="dialog-footer">
+          <el-button @click="addVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="saveAdd">OK</el-button>
+        </span>
       </template>
     </el-dialog>
     <!-- Edit User Dialog -->
@@ -248,10 +248,10 @@
         </el-form-item>
       </el-form>
       <template #footer>
-				<span class="dialog-footer">
-					<el-button @click="editVisible = false">Cancel</el-button>
-					<el-button type="primary" @click="saveEdit">OK</el-button>
-				</span>
+        <span class="dialog-footer">
+          <el-button @click="editVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="saveEdit">OK</el-button>
+        </span>
       </template>
     </el-dialog>
   </div>

@@ -6,5 +6,4 @@ import tech.wetech.admin3.sys.model.Resource;
 /**
  * @author cjbi
  */
-public record ResourceUpdated(Resource resource) implements DomainEvent {
-}
+public record ResourceUpdated(Resource resource) implements DomainEvent {}

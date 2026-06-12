@@ -1,5 +1,7 @@
 package tech.wetech.admin3.infra.storage;
 
+import java.io.InputStream;
+import java.net.URI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -10,9 +12,6 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 import tech.wetech.admin3.sys.model.StorageConfig;
-
-import java.io.InputStream;
-import java.net.URI;
 
 /**
  * @author cjbi
@@ -29,34 +28,37 @@ public class S3Storage implements Storage {
 
   private S3Client getS3Client() {
     return S3Client.builder()
-      .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create(config.getAccessKey(), config.getSecretKey())))
-      .region(Region.AWS_GLOBAL)
-      .endpointOverride(URI.create(config.getEndpoint()))
-      .serviceConfiguration(config -> config
-        .pathStyleAccessEnabled(true)
-        .chunkedEncodingEnabled(false)
-      )
-      .build();
+        .credentialsProvider(
+            StaticCredentialsProvider.create(
+                AwsBasicCredentials.create(config.getAccessKey(), config.getSecretKey())))
+        .region(Region.AWS_GLOBAL)
+        .endpointOverride(URI.create(config.getEndpoint()))
+        .serviceConfiguration(
+            config -> config.pathStyleAccessEnabled(true).chunkedEncodingEnabled(false))
+        .build();
   }
 
   /**
    * Upload file
    *
-   * @param bucketName  Bucket name
-   * @param objectName  File name
-   * @param is      File stream
+   * @param bucketName Bucket name
+   * @param objectName File name
+   * @param is File stream
    * @param contentType Type
    * @param contentLength Size
-   * @see <a href= "http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/PutObject">AWS
-   * API Documentation</a>
+   * @see <a href= "http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/PutObject">AWS API
+   *     Documentation</a>
    */
-  public PutObjectResponse putObject(String bucketName, String objectName, InputStream is,
-                                     String contentType, long contentLength) {
+  public PutObjectResponse putObject(
+      String bucketName,
+      String objectName,
+      InputStream is,
+      String contentType,
+      long contentLength) {
     try (S3Client s3Client = getS3Client()) {
       return s3Client.putObject(
-        req -> req.bucket(bucketName).key(objectName).contentType(contentType),
-        RequestBody.fromInputStream(is, contentLength)
-      );
+          req -> req.bucket(bucketName).key(objectName).contentType(contentType),
+          RequestBody.fromInputStream(is, contentLength));
     }
   }
 
@@ -66,7 +68,8 @@ public class S3Storage implements Storage {
   }
 
   @Override
-  public void store(InputStream inputStream, long contentLength, String contentType, String keyName) {
+  public void store(
+      InputStream inputStream, long contentLength, String contentType, String keyName) {
     String bucketName = config.getBucketName();
 
     if (!doesBucketExist(bucketName)) {
@@ -119,9 +122,7 @@ public class S3Storage implements Storage {
     }
     String bucketName = config.getBucketName();
     try (S3Client s3Client = getS3Client()) {
-      return s3Client.utilities()
-        .getUrl(req -> req.bucket(bucketName).key(filename)).toString();
+      return s3Client.utilities().getUrl(req -> req.bucket(bucketName).key(filename)).toString();
     }
   }
-
 }

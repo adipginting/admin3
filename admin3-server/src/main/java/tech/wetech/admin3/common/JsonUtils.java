@@ -10,10 +10,9 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import tech.wetech.admin3.infra.BaseEntitySerializer;
-
 import java.io.IOException;
 import java.util.*;
+import tech.wetech.admin3.infra.BaseEntitySerializer;
 
 /**
  * @author cjbi
@@ -25,7 +24,7 @@ public class JsonUtils {
   static {
     JsonMapper.Builder builder = new JsonMapper().rebuild();
     builder.serializationInclusion(JsonInclude.Include.NON_NULL);
-//        JSON.configure(SerializationFeature.INDENT_OUTPUT, false);
+    //        JSON.configure(SerializationFeature.INDENT_OUTPUT, false);
     // Do not display null fields
     builder.serializationInclusion(JsonInclude.Include.NON_NULL);
     // Serialize enums using ordinal() output
@@ -58,8 +57,7 @@ public class JsonUtils {
 
   public static Map<String, Object> parseToMap(String json) {
     try {
-      return JSON.readValue(json, new TypeReference<>() {
-      });
+      return JSON.readValue(json, new TypeReference<>() {});
     } catch (IOException e) {
       throw new IllegalArgumentException(e);
     }
@@ -90,5 +88,4 @@ public class JsonUtils {
       throw new IllegalArgumentException(e);
     }
   }
-
 }

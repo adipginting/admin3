@@ -28,7 +28,8 @@ public class AuthInterceptor implements HandlerInterceptor {
   }
 
   @Override
-  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+  public boolean preHandle(
+      HttpServletRequest request, HttpServletResponse response, Object handler) {
     if (request.getHeader("Authorization") == null) {
       log.warn("Request uri {} {} is unauthorized", request.getMethod(), request.getRequestURI());
       throw new BusinessException(CommonResultStatus.UNAUTHORIZED);
@@ -39,9 +40,13 @@ public class AuthInterceptor implements HandlerInterceptor {
     }
     UserinfoDTO loginUserInfo = sessionService.getLoginUserInfo(token);
     if (handler instanceof HandlerMethod handlerMethod) {
-      RequiresPermissions requiresPermissions = handlerMethod.getMethodAnnotation(RequiresPermissions.class);
+      RequiresPermissions requiresPermissions =
+          handlerMethod.getMethodAnnotation(RequiresPermissions.class);
       if (requiresPermissions != null) {
-        if (!PermissionHelper.isPermitted(loginUserInfo.permissions(), requiresPermissions.value(), requiresPermissions.logical())) {
+        if (!PermissionHelper.isPermitted(
+            loginUserInfo.permissions(),
+            requiresPermissions.value(),
+            requiresPermissions.logical())) {
           throw new BusinessException(CommonResultStatus.FORBIDDEN);
         }
       }

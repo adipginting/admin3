@@ -6,5 +6,4 @@ import tech.wetech.admin3.sys.model.User;
 /**
  * @author cjbi
  */
-public record UserUpdated(User user) implements DomainEvent {
-}
+public record UserUpdated(User user) implements DomainEvent {}

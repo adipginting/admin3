@@ -27,12 +27,12 @@
         <el-avatar class="user-avator" :size="30" :src="avatar"/>
         <!-- Username dropdown menu -->
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
-					<span class="el-dropdown-link">
-						{{ username }}
-						<el-icon class="el-icon--right">
-							<arrow-down/>
-						</el-icon>
-					</span>
+          <span class="el-dropdown-link">
+            {{ username }}
+            <el-icon class="el-icon--right">
+              <arrow-down/>
+            </el-icon>
+          </span>
           <template #dropdown>
             <el-dropdown-menu>
 <!--              <a href="https://github.com/lin-xin/vue-manage-system" target="_blank">

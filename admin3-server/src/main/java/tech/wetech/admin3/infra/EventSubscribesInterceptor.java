@@ -27,16 +27,17 @@ public class EventSubscribesInterceptor implements HandlerInterceptor {
   }
 
   @Override
-  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+  public boolean preHandle(
+      HttpServletRequest request, HttpServletResponse response, Object handler) {
     DomainEventPublisher.instance().reset();
     DomainEventPublisher.instance().subscribe(DomainEvent.class, eventStore::append);
     // Refresh session when the following events occur
     DomainEventPublisher.instance().subscribe(RoleUpdated.class, event -> sessionService.refresh());
     DomainEventPublisher.instance().subscribe(RoleDeleted.class, event -> sessionService.refresh());
-    DomainEventPublisher.instance().subscribe(ResourceUpdated.class, event -> sessionService.refresh());
-    DomainEventPublisher.instance().subscribe(ResourceDeleted.class, event -> sessionService.refresh());
+    DomainEventPublisher.instance()
+        .subscribe(ResourceUpdated.class, event -> sessionService.refresh());
+    DomainEventPublisher.instance()
+        .subscribe(ResourceDeleted.class, event -> sessionService.refresh());
     return true;
   }
-
-
 }
